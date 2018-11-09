@@ -1,0 +1,27 @@
+.homePage{
+    width: 100%;
+    transition: all .4s ease;
+    position: relative;
+    .homePage-bg{
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100%;
+        transition: all .4s ease;
+        background: url('~/assets/img/banner/travel-banner.jpg') center no-repeat;
+        background-size: cover;  
+    }
+    .homePage-content{
+        width: 100%;
+        height: auto;
+        position: absolute;
+        z-index: 9;
+        .homePage-content-header{
+            width: 100%;
+            height: 100vh;
+            background: url('~/assets/img/banner/bannerBj.gif') repeat;
+            transition: all .4s ease;
+        }
+    }
+}
