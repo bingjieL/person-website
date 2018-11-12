@@ -80,11 +80,11 @@ export default {
             transition: all 0.3s ease;
             i{
                 font-size: 14px;
+                color: #666;
             } 
         }   
-        
         &:hover{
-            color: #666;
+            color: #000;
         }
     }
 }

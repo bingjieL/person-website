@@ -24,7 +24,8 @@ module.exports = {
   },
   css:[
     '~/assets/css/common/main.css',
-    '~/static/icon/iconfont.css'
+    '~/static/icon/iconfont.css',
+    'swiper/dist/css/swiper.css' // swiper
   ],
   // 配置页面过渡效果
   transition: {
@@ -49,7 +50,8 @@ module.exports = {
      { src: '~/plugins/scroll-progress', ssr: false},
      { src: '~/plugins/copy-right', ssr: false},
      { src: '~/plugins/ga', ssr: false},
-     { src: '~/plugins/mixin', ssr: false}
+     { src: '~/plugins/mixin', ssr: false},
+     { src: '~/plugins/swiper.js', ssr: false },
      
   ],
   /*

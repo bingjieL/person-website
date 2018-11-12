@@ -1,41 +1,26 @@
 <template>
-    <div>
-        <main class="homePage">
-            <section class="homePage-bg">
-            </section>
-            <section class="homePage-content">
-                <div class="homePage-content-header">
-                </div>
-                <div class="homePage-content-list">
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                </div>
-            </section>
-        </main>
-    </div>
+    <main class="homePage">
+        <section class="homePage-header">
+            <figure class="homePage-bg"></figure>
+        </section>
+        <section class="homePage-content">
+            <div class="homePage-content-list">
+                <Swiper></Swiper>
+            </div>
+        </section>
+       
+    </main>
 </template>
 
 <script>
+
+import Swiper from '~/components/Swiper.vue'
+
 export default {
-    layout: 'hasHeader'
+    layout: 'hasHeader',
+    components: {
+        Swiper
+    }
 }
 </script>
 
