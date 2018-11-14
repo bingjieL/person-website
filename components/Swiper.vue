@@ -42,7 +42,8 @@ import nuxtLogo from '~/assets/img/home/nuxt-logo.jpg'
             slidesPerView: 'auto',
             centeredSlides: true,
             loop: true,
-            loopedSlides: 2,       
+            loopedSlides: 5,      
+            slidesPerView: 2, 
             cwidth: 1100,
             // autoplay: true,
             // navigation: {
@@ -62,7 +63,7 @@ import nuxtLogo from '~/assets/img/home/nuxt-logo.jpg'
                         if (Math.abs(slideProgress) > 1) {
                             modify = (Math.abs(slideProgress) - 1) * 0.3 + 1;
                         }
-                        let translate = slideProgress * modify * 260 + 'px';
+                        let translate = slideProgress * modify * 220 + 'px';
                         let scale = 1 - Math.abs(slideProgress) / 7;
                         let zIndex = 999 - Math.abs(Math.round(10 * slideProgress));
                         slide.transform('translateX(' + translate + ') scale(' + scale + ')');
@@ -105,9 +106,9 @@ import nuxtLogo from '~/assets/img/home/nuxt-logo.jpg'
 
 #certify {
 	position: relative;
-	width: 1000px;
+	width: 900px;
     margin: 0px auto;
-    padding: 100px 0;
+    padding: 5px 0 30px;
 }
 
 #certify .swiper-container {
@@ -118,14 +119,14 @@ import nuxtLogo from '~/assets/img/home/nuxt-logo.jpg'
     height: 120px;
 }
 #certify  .swiper-slide {
-	width: 520px;
+	width: 100%;
 	height: 408px;
 	background: #fff;
 	box-shadow: 0 8px 30px #ddd;
 }
 #certify  .swiper-slide img{
     display:block;
-    width: 520px;
+    width: 100%;
 }
 #certify  .swiper-slide p {
 	line-height: 98px;
@@ -138,7 +139,7 @@ import nuxtLogo from '~/assets/img/home/nuxt-logo.jpg'
 
 #certify .swiper-pagination {
 	width: 100%;
-	bottom: 60px;
+	bottom: 0px;
 }
 
 #certify .swiper-pagination-bullets .swiper-pagination-bullet {

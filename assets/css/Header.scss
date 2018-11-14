@@ -1,3 +1,4 @@
+@import './common/mixins.scss';
 .mainHeader{
     .scroll-progress{
         width: 0%;
@@ -28,9 +29,12 @@
             background:#fff;
             box-shadow: 0 1px 40px 4px rgba(0,0,0,.5);
         }
+        &:hover .right{
+            display: block!important;
+        }
         .left{
-            padding-left: 40px; 
-            width: 320px;
+            padding-left: 60px; 
+            // width: 320px;
             overflow: hidden;
             h3{
                 text-transform: uppercase;
@@ -60,15 +64,11 @@
                     line-height: 30px;
                     padding: 0 5px;
                     font-size: 24px;
-                    // &:hover{
-                    //     background: orange;
-                    //     border-radius:4px;
-                    //     color: #fff; 
-                    // }
                 }
             }
         }
         .right{
+            display: none;
             ul{
                 width: 100%;
                 margin-right: 20px; 
@@ -109,18 +109,60 @@
                 }
             }
         }
+        .search-header{
+            margin-right: 50px;
+            span{
+                display: inline-block;
+                width: 40px;
+                height: 100%;
+                line-height: 60px;
+                margin: 0 5px; 
+                cursor: pointer;
+                i{
+                    font-size: 30px;
+                    color: #666;
+                    &:hover{
+                        color: rgb(254, 150, 0);
+                    }
+                }
+            }
+            .search{
+                i{
+                    font-size: 28px; 
+                }
+            }
+        }
     }
     .goTop{
         width: 70px;
         height: 900px;
         position: fixed;
-        right: 0;
+        right: 10px;
         bottom: 100vh;
         transition: all .4s ease;
         z-index: 99;
         img{
             width: 100%;
             height: 100%;
+        }
+        animation: toTopUP 2s linear infinite;
+        transition: all .4s ease;
+        @keyframes toTopUP {
+            0%{
+                transform: translateY(0)
+            }
+            25%{
+                transform: translateY(-6px)
+            }
+            50%{
+                transform: translateY(-12px)
+            }
+            75%{
+                transform: translateY(-6px)
+            }
+            100%{
+                transform: translateY(0)
+            }
         }
     }
 }

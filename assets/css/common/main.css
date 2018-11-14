@@ -17,7 +17,8 @@ time, mark, audio, video {
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
-    font-family: "Source Han Serif SC", "Source Han Serif", source-han-serif-sc, "PT Serif", "SongTi SC", "MicroSoft Yahei", Georgia, serif;
+    color: #666;
+    font-family: "Merriweather Sans,sans-serif", "Source Han Serif", source-han-serif-sc, "PT Serif", "SongTi SC", "MicroSoft Yahei", Georgia, serif;
 }
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
@@ -67,4 +68,26 @@ html, body{
     border-radius: 4px;  /*滚动条的圆角*/
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);  
     background-color: orange;  /*滚动条的背景颜色*/
+}
+
+
+/* 超出两行显示省略号 */
+
+
+.line-clamp1{
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+.line-clamp4{
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    word-wrap: break-word;
 }
