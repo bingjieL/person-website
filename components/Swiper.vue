@@ -3,7 +3,7 @@
   <div v-swiper:mySwiper="swiperOption" id='certify'>
     <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(item,index) in swiperList" :key="index">
-            <img :src="item.imgSrc" />
+            <img :src="item.imgSrc" style="width:100%" />
             <p>{{item.title}}</p>
         </div>
     </div>
@@ -42,7 +42,7 @@ import nuxtLogo from '~/assets/img/home/nuxt-logo.jpg'
             slidesPerView: 'auto',
             centeredSlides: true,
             loop: true,
-            loopedSlides: 5,      
+            loopedSlides: 3,      
             slidesPerView: 2, 
             cwidth: 1100,
             // autoplay: true,

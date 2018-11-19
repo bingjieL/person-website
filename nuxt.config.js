@@ -27,14 +27,6 @@ module.exports = {
     '~/static/icon/iconfont.css',
     'swiper/dist/css/swiper.css' // swiper
   ],
-  // 配置页面过渡效果
-  transition: {
-    name: 'page',
-    mode: 'out-in',
-    beforeEnter (el) {
-      // console.log('Before enter...')
-    }
-  },
   router: {
     base: '/',
     scrollBehavior: function (to, from, savedPosition) {

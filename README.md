@@ -25,5 +25,5 @@ $ npm run build
 
 pm2 start ./node_modules/nuxt/bin/nuxt 
 
-pm2 start npm --name (自己的项目名字)  -- nuxt start
+pm2 start npm --name (自己的项目名字)  -- run start
 

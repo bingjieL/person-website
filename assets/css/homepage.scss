@@ -98,7 +98,7 @@
         }
         .header-tip{
             position: absolute;
-            top: 53vh;
+            top: calc( 36vh + 120px ) ;
             width: 540px;
             left: calc( 50% - 270px ); 
             background: rgba(0,0,0,.5); 
