@@ -1,11 +1,9 @@
 import axios from 'axios'
-import qs from 'qs'
-import { promise } from 'es6-promise'
 import { Message } from 'element-ui'
 
 const service = axios.create({
     headers:{
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
         'X-Requested-With': 'XMLHttpRequest',
     },
     timeout: 10000,

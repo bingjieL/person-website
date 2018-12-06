@@ -83,6 +83,11 @@
                     &:last-child{
                         margin: 0;
                     }
+                    a{
+                        &:hover{
+                            color: orange;
+                        }
+                    }
                     .icon{
                         display: inline-block;
                         margin-right: 5px; 

@@ -1,7 +1,7 @@
 <template>
-    <main class="homePage">
+    <section class="homePage">
         <section class="homePage-header">
-            <figure class="homePage-bg"></figure>
+            <figure class="homePage-bg animated pulse slow"></figure>
             <h1 class="header-title" data-value="HI, JAY.BOY!">
                 HI, JAY.BOY!
             </h1>
@@ -154,8 +154,7 @@
                 </div>
             </div>
         </section>
-       
-    </main>
+    </section>
 </template>
 
 <script>

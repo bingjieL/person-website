@@ -10,28 +10,40 @@
             <nav class="right" id='nav-right'>
                 <ul ref='nav'>
                     <li @mouseover="setHoverClass('homeIcon', 'flash')" @mouseout="rmHoverClass('homeIcon', 'flash')">
-                        <span ref='homeIcon' class="icon animated"><i class="iconfont icon-home"></i></span> 
-                        Home
+                        <nuxt-link to='/homePage'>
+                            <span ref='homeIcon' class="icon animated"><i class="iconfont icon-home"></i></span> 
+                            Home
+                        </nuxt-link>
                     </li>
                     <li @mouseover="setHoverClass('aboutIcon', 'shake')" @mouseout="rmHoverClass('aboutIcon', 'shake')">
-                        <span ref='aboutIcon' class="icon animated"><i class="iconfont icon-about"></i></span> 
-                        About
+                        <nuxt-link to='/blog'>
+                            <span ref='aboutIcon' class="icon animated"><i class="iconfont icon-about"></i></span> 
+                            Blog
+                        </nuxt-link>
                     </li>
                     <li @mouseover="setHoverClass('XinIcon', 'rotateIn')" @mouseout="rmHoverClass('XinIcon', 'rotateIn')">
-                        <span ref='XinIcon' class="icon animated"><i class="iconfont icon-shenghuoaixinjuanzeng"></i></span> 
-                        爱心
+                        <nuxt-link to='/music'>
+                            <span ref='XinIcon' class="icon animated"><i class="iconfont icon-shenghuoaixinjuanzeng"></i></span> 
+                            Music
+                        </nuxt-link>
                     </li>
                     <li @mouseover="setHoverClass('lockIcon', 'flash')" @mouseout="rmHoverClass('lockIcon', 'flash')">
-                        <span ref='lockIcon' class="icon animated"><i class="iconfont icon-ic_vpn_lock"></i></span> 
-                        Lock
+                        <nuxt-link to='/book'>
+                            <span ref='lockIcon' class="icon animated"><i class="iconfont icon-ic_vpn_lock"></i></span> 
+                            书单
+                        </nuxt-link>
                     </li>
                      <li @mouseover="setHoverClass('liuyanIcon', 'bounce')" @mouseout="rmHoverClass('liuyanIcon', 'bounce')">
-                        <span ref='liuyanIcon' class="icon animated"><i class="iconfont icon-liuyan"></i></span> 
-                        留言
+                        <nuxt-link to='/comment'>
+                            <span ref='liuyanIcon' class="icon animated"><i class="iconfont icon-liuyan"></i></span> 
+                            留言
+                        </nuxt-link>
                     </li>
                      <li @mouseover="setHoverClass('projectIcon', 'flip')" @mouseout="rmHoverClass('projectIcon', 'flip')">
-                        <span ref='projectIcon' class="icon animated"><i class="iconfont icon-project-o"></i></span> 
-                        项目
+                        <nuxt-link to='/about'>
+                            <span ref='projectIcon' class="icon animated"><i class="iconfont icon-project-o"></i></span> 
+                            About
+                        </nuxt-link>
                     </li>
                 </ul>
                

@@ -4,7 +4,7 @@
  *
 */
 
-if (process.BROWSER_BUILD) {
+if (process.browser) {
  
   const copyText = () => {
     return [ '',

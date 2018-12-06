@@ -63,7 +63,7 @@ import nuxtLogo from '~/assets/img/home/nuxt-logo.jpg'
                         if (Math.abs(slideProgress) > 1) {
                             modify = (Math.abs(slideProgress) - 1) * 0.3 + 1;
                         }
-                        let translate = slideProgress * modify * 220 + 'px';
+                        let translate = slideProgress * modify * 150 + 'px';
                         let scale = 1 - Math.abs(slideProgress) / 7;
                         let zIndex = 999 - Math.abs(Math.round(10 * slideProgress));
                         slide.transform('translateX(' + translate + ') scale(' + scale + ')');
