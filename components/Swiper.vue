@@ -1,9 +1,9 @@
 <template>
   <!-- You can find this swiper instance object in current component by the "mySwiper"  -->
   <div v-swiper:mySwiper="swiperOption" id='certify'>
-    <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="(item,index) in swiperList" :key="index">
-            <img :src="item.imgSrc" style="width:100%" />
+    <div class="swiper-wrapper" v-show="showSwiper">
+        <div class="swiper-slide" v-for="(item,index) in swiperList" :key="index" >
+            <img :src="item.imgSrc" style="width:100%" :id="item.id"/>
             <p>{{item.title}}</p>
         </div>
     </div>
@@ -22,19 +22,24 @@ import nuxtLogo from '~/assets/img/home/nuxt-logo.jpg'
 
   export default {
     data () {
+      let vm = this
       return {
+        showSwiper: false,
         swiperList: [
           {
               imgSrc: cmsLogo,
-              title: 'CMS - Jay.Blog'
+              title: 'CMS - Jay.Blog',
+              id: 'cms'
           },
           {
               imgSrc: nodeLogo,
-              title: 'NODE.JS - Jay.Blog'
+              title: 'NODE.JS - Jay.Blog',
+              id: 'node'
           },
           {
               imgSrc: nuxtLogo,
-              title: 'NUXT.SSR - Jay.Blog'
+              title: 'NUXT.SSR - Jay.Blog',
+              id: 'nuxt'
           }
         ],
         swiperOption: {
@@ -55,6 +60,10 @@ import nuxtLogo from '~/assets/img/home/nuxt-logo.jpg'
                 clickable :true,
             },
             on: {
+                click(e) {
+                    let _index = this.realIndex
+                    let id = e.target.id
+                },
                 progress: function(progress) {
                     for (let i = 0; i < this.slides.length; i++) {
                         let slide = this.slides.eq(i);
@@ -73,13 +82,15 @@ import nuxtLogo from '~/assets/img/home/nuxt-logo.jpg'
                             slide.css('opacity', 0);
                         }
                     }
+                    console.log('---> ')
+                     vm.showSwiper = true
+                   
                 },
                 setTransition: function(transition) {
                     for (let i = 0; i < this.slides.length; i++) {
                         let slide = this.slides.eq(i)
                         slide.transition(transition);
                     }
-
                 }
             }
         }

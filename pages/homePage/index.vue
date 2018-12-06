@@ -1,8 +1,8 @@
 <template>
     <section class="homePage">
         <section class="homePage-header">
-            <figure class="homePage-bg animated pulse slow"></figure>
-            <h1 class="header-title" data-value="HI, JAY.BOY!">
+            <figure class="homePage-bg "></figure>
+            <h1 class="header-title animated pulse slow" data-value="HI, JAY.BOY!">
                 HI, JAY.BOY!
             </h1>
             <div class="header-tip">
@@ -163,6 +163,7 @@ import Swiper from '~/components/Swiper.vue'
 
 export default {
     layout: 'hasHeader',
+    scrollToTop: true,
     components: {
         Swiper
     },

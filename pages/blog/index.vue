@@ -11,6 +11,8 @@
 <script>
 export default {
     layout: 'hasHeader',
+    scrollToTop: true,
+
 }
 </script>
 

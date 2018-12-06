@@ -29,11 +29,10 @@ module.exports = {
   ],
   router: {
     base: '/',
-    scrollBehavior: function (to, from, savedPosition) {
-      // 所有页面跳转后滚动至顶部
-      return { x: 0, y: 0 }
-    },
-    // middleware: ['default', 'check-bower']
+    // scrollBehavior: function (to, from, savedPosition) {
+    //   return { x: 0, y: 0 }
+    // },
+    middleware: []
   },
  
   plugins: [
