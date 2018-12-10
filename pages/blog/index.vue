@@ -12,6 +12,17 @@
 export default {
     layout: 'hasHeader',
     scrollToTop: true,
+    head: {
+        title: 'Blog Page || ~~Jay的小栈',
+        meta: [
+            { charset: 'utf-8' },
+            { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+            { hid: 'description', name: 'description', content: 'Jay的小栈的Blog Page' },
+            { property: 'og:title', content: 'Blog Page'},
+            { property: 'og:type', content: 'Blog Page'},
+            { property: 'og:description', content: 'Blog Page'}
+        ]
+    },
 
 }
 </script>
@@ -44,7 +55,7 @@ export default {
             background-image:  linear-gradient(270deg,#c4987a 33%,#ffd5bf 73%);
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            
+            transform: translateX(-50%)
         }
         &::after{
             content: '';

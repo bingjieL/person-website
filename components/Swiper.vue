@@ -19,7 +19,6 @@
 import cmsLogo from '~/assets/img/home/cms-logo.jpg'
 import nodeLogo from '~/assets/img/home/node-logo.jpg'
 import nuxtLogo from '~/assets/img/home/nuxt-logo.jpg'
-
   export default {
     data () {
       let vm = this
@@ -63,6 +62,13 @@ import nuxtLogo from '~/assets/img/home/nuxt-logo.jpg'
                 click(e) {
                     let _index = this.realIndex
                     let id = e.target.id
+                    if(id == 'nuxt') {
+                        window.open('https://github.com/bingjieL/person-website')
+                    }else if(id == 'node') {
+                        window.open('https://github.com/bingjieL/blogServer')
+                    }else if(id == 'cms') {
+                        window.open('https://github.com/bingjieL/blog-cms')
+                    }
                 },
                 progress: function(progress) {
                     for (let i = 0; i < this.slides.length; i++) {
@@ -82,7 +88,6 @@ import nuxtLogo from '~/assets/img/home/nuxt-logo.jpg'
                             slide.css('opacity', 0);
                         }
                     }
-                    console.log('---> ')
                      vm.showSwiper = true
                    
                 },

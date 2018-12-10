@@ -27,29 +27,29 @@ export default {
         return {
             
             musicOptions: {
-                title: 'secret base~君がくれたもの~',
-                artist: 'Silent Siren',
-                src: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.mp3',
-                pic: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.jpg'
+                title: '浪子回头',
+                artist: '茄子蛋',
+                src: 'http://www.170mv.com/kw/sc.sycdn.kuwo.cn/resource/n1/66/15/2796814273.mp3',
+                pic: 'http://blog.8bjl.cn/upload/music/%E6%B5%AA%E5%AD%90%E5%9B%9E%E5%A4%B4%20.jpg'
             },
             musicList: [
                 {
                     title: '浪子回头',
                     artist: '茄子蛋',
                     src: 'http://www.170mv.com/kw/sc.sycdn.kuwo.cn/resource/n1/66/15/2796814273.mp3',
-                    pic: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.jpg'
+                    pic: 'http://blog.8bjl.cn/upload/music/%E6%B5%AA%E5%AD%90%E5%9B%9E%E5%A4%B4%20.jpg'
                 },
                 {
                     title: 'Oh Father',
                     artist: 'Bodhi Jones',
                     src: 'http://other.web.rc01.sycdn.kuwo.cn/resource/n3/96/7/1453412824.mp3',
-                    pic: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.jpg'
+                    pic: 'http://blog.8bjl.cn/upload/music/oh%20Father.jpg'
                 },
                 {
                     title: '十七岁',
                     artist: '刘德华',
                     src: 'http://dl.stream.qqmusic.qq.com/M8000021YedA15ctea.mp3?vkey=29EB778802A5207F8A77C6D1E4E906C1628BB98E1CC63F872FB1B05F9176D332A7EFEF7428676DA6BBAC1CBCA58830C4C2FC2932920E2B74&guid=5150825362&fromtag=1',
-                    pic: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.jpg'
+                    pic: 'http://blog.8bjl.cn/upload/music/%E5%8D%81%E4%B8%83%E5%B2%81.jpg'
                 },
                 {
                     title: 'secret base~君がくれたもの~',

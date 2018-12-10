@@ -11,6 +11,17 @@
 <script>
 export default {
     layout: 'hasHeader',
+    head: {
+        title: 'About Page || ~~Jay的小栈',
+        meta: [
+            { charset: 'utf-8' },
+            { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+            { hid: 'description', name: 'description', content: 'Jay的小栈的About Page' },
+            { property: 'og:title', content: 'About Page'},
+            { property: 'og:type', content: 'About Page'},
+            { property: 'og:description', content: 'About Page'}
+        ]
+    },
 }
 </script>
 
@@ -42,6 +53,7 @@ export default {
             background-image:  linear-gradient(270deg,#c4987a 33%,#ffd5bf 73%);
             background-clip: text;
             -webkit-text-fill-color: transparent; 
+            transform: translateX(-50%)
         }
         &::after{
             content: '';

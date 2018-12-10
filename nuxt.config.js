@@ -2,6 +2,13 @@
 const Webpack = require('webpack')
 module.exports = {
   /*
+  **catche
+  */
+  cache: {
+    max: 1000,
+    maxAge: 900000
+  },
+  /*
   ** Headers of the page
   */
   head: {
@@ -74,7 +81,7 @@ module.exports = {
         '$': 'jquery'
       })
     ],
-    vendor: ['axios', 'element-ui', 'babel-polyfill'],
+    vendor: ['element-ui', 'babel-polyfill'],
     babel: {
       presets: ['es2015', 'stage-0'],
       plugins: ['transform-runtime']
@@ -108,17 +115,17 @@ module.exports = {
     ]
   },
   modules: [
-    '@nuxtjs/proxy',
+    // '@nuxtjs/proxy',
     'bootstrap-vue/nuxt',
     ['bootstrap-vue/nuxt', { css: false }]
   ],
-  proxy: [
-      ['/v1', { 
-        context: ["/v1"],
-        secure: false,  
-        target: 'http://specials.3tichina.com'
-       }
-      ]
-  ]
+  // proxy: [
+  //     ['/v1', { 
+  //       context: ["/v1"],
+  //       secure: false,  
+  //       target: 'http://specials.3tichina.com'
+  //      }
+  //     ]
+  // ]
 }
 

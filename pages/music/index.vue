@@ -1,7 +1,8 @@
 <template>
     <section class="blog-wrap">
        <div class="banner " >
-           <div class="img animated pulse slow">
+           <div id="music-banner" class="img animated pulse slow">
+               <img v-show="bannerImg" src="~/assets/img/banner/entertainment-banner.jpg" @load="bannerImgLoad" alt="" srcset="">
            </div>
            <h3>Music</h3>
        </div>
@@ -11,6 +12,33 @@
 <script>
 export default {
     layout: 'hasHeader',
+    scrollToTop: true,
+    head: {
+        title: 'Music Page || ~~Jay的小栈',
+        meta: [
+            { charset: 'utf-8' },
+            { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+            { hid: 'description', name: 'description', content: 'Jay的小栈的Music Page' },
+            { property: 'og:title', content: 'Music Page'},
+            { property: 'og:type', content: 'Music Page'},
+            { property: 'og:description', content: 'Music Page'}
+        ]
+    },
+    data() {
+        return{
+            bannerImg: false,
+        }
+    },
+    mounted() {
+      
+    },
+    methods: {
+        bannerImgLoad() {
+            $('#music-banner').css({
+                
+            })
+        }
+    }
 }
 </script>
 
@@ -26,6 +54,7 @@ export default {
             width: 100%;
             height: 65vh;
             background: url("~/assets/img/banner/entertainment-banner.jpg") center no-repeat;
+            // background: url("~/assets/img/banner/loader-svg.svg") center no-repeat;
             background-size: cover; 
             transition: all 0.5s ease;
         }
@@ -42,6 +71,7 @@ export default {
             background-image:  linear-gradient(270deg,#c4987a 33%,#ffd5bf 73%);
             background-clip: text;
             -webkit-text-fill-color: transparent;
+            transform: translateX(-50%)
             
         }
          &::after{

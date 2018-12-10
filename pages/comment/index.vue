@@ -11,6 +11,18 @@
 <script>
 export default {
     layout: 'hasHeader',
+    scrollToTop: true,
+    head: {
+        title: 'Comment Page || ~~Jay的小栈',
+        meta: [
+            { charset: 'utf-8' },
+            { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+            { hid: 'description', name: 'description', content: 'Jay的小栈的Comment Page' },
+            { property: 'og:title', content: 'Comment Page'},
+            { property: 'og:type', content: 'Comment Page'},
+            { property: 'og:description', content: 'Comment Page'}
+        ]
+    },
 }
 </script>
 
@@ -25,7 +37,7 @@ export default {
         .img {
             width: 100%;
             height: 65vh;
-            background: url("~/assets/img/banner/art-and-culture-banner.jpg") center no-repeat;
+            background: url("~/assets/img/banner/coment.jpg") center no-repeat;
             background-size: cover; 
             transition: all 0.5s ease;
         }
@@ -42,7 +54,7 @@ export default {
             background-image:  linear-gradient(270deg,#c4987a 33%,#ffd5bf 73%);
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            
+            transform: translateX(-50%)
         }
         &::after{
             content: '';

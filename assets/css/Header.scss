@@ -73,8 +73,6 @@
                 width: 100%;
                 margin-right: 20px; 
                 li{
-                    padding: 20px 5px;
-                    line-height: 20px;
                     float: left;
                     position: relative;
                     color: #666;
@@ -84,6 +82,10 @@
                         margin: 0;
                     }
                     a{
+                        display: block;
+                        padding: 20px 10px;
+                        line-height: 20px;
+                        height: 60px;
                         &:hover{
                             color: orange;
                         }
