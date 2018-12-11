@@ -1,6 +1,5 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
-import Router from '@/router'
+// import { Message } from 'element-ui'
 
 const service = axios.create({
     headers:{
@@ -28,10 +27,10 @@ service.interceptors.request.use(
 // 返回结果处理
 service.interceptors.response.use(
   res => {
-    let { code, message } = res.data
-    if(code != 200){
-        Message.error({ message: message })
-    }
+    // let { code, message } = res.data
+    // if(code != 200){
+    //     Message.error({ message: message })
+    // }
     return res.data
   },
   error => {
@@ -46,7 +45,7 @@ service.interceptors.response.use(
         case 500:
         case 502:
           console.log('接口异常:' + error.response.status)
-          Message.error({ message: '~~ 网络异常!!' })
+          // Message.error({ message: '~~ 网络异常!!' })
           break
       }
     }

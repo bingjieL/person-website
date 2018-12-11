@@ -9,9 +9,15 @@
 
 <script>
 import Aplayer from 'vue-aplayer'
+import { ApiGetMusic } from '~/plugins/server/header'
+
 export default {
     components: {
         Aplayer
+    },
+    created () {
+        this.getmusic()
+        
     },
     mounted () {
         $('.aplayer').eq(0).css({width:'0px'})
@@ -21,11 +27,12 @@ export default {
     watch: {
      musicList:function(val){
          let length = val.length
+         this.changeMusicListLoca(length)
      }   
     },
     data() {
         return {
-            
+            isAplayerShow:true,
             musicOptions: {
                 title: '浪子回头',
                 artist: '茄子蛋',
@@ -45,18 +52,6 @@ export default {
                     src: 'http://other.web.rc01.sycdn.kuwo.cn/resource/n3/96/7/1453412824.mp3',
                     pic: 'http://blog.8bjl.cn/upload/music/oh%20Father.jpg'
                 },
-                {
-                    title: '十七岁',
-                    artist: '刘德华',
-                    src: 'http://dl.stream.qqmusic.qq.com/M8000021YedA15ctea.mp3?vkey=29EB778802A5207F8A77C6D1E4E906C1628BB98E1CC63F872FB1B05F9176D332A7EFEF7428676DA6BBAC1CBCA58830C4C2FC2932920E2B74&guid=5150825362&fromtag=1',
-                    pic: 'http://blog.8bjl.cn/upload/music/%E5%8D%81%E4%B8%83%E5%B2%81.jpg'
-                },
-                {
-                    title: 'secret base~君がくれたもの~',
-                    artist: 'Silent Siren',
-                    src: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.mp3',
-                    pic: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.jpg'
-                }
             ],
             showPlayerStatus: false
         }
@@ -91,6 +86,24 @@ export default {
             if(!this.showPlayerStatus){
                 $('.aplayer').eq(0).css({width:'0px'})
             }
+        },
+        getmusic() {
+            ApiGetMusic({}).then(res => {
+                if(res.code == 200 && res.data.count> 0) {
+                    let _rows =  res.data.rows
+                    let arr = []
+                    _rows.forEach((item,index) => {
+                        let obj ={}
+                        obj.title = item.musicTitle
+                        obj.artist = item.musicAuthor
+                        obj.src = item.musicUrl   
+                        obj.pic = item.musicPic
+                       
+                        arr.push(obj)
+                    })
+                    this.musicList = arr
+                }
+            })
         }
     }
 }

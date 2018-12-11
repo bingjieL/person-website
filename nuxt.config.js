@@ -81,7 +81,7 @@ module.exports = {
         '$': 'jquery'
       })
     ],
-    vendor: ['element-ui', 'babel-polyfill'],
+    vendor: ['babel-polyfill'],
     babel: {
       presets: ['es2015', 'stage-0'],
       plugins: ['transform-runtime']
@@ -116,8 +116,8 @@ module.exports = {
   },
   modules: [
     // '@nuxtjs/proxy',
-    'bootstrap-vue/nuxt',
-    ['bootstrap-vue/nuxt', { css: false }]
+    // 'bootstrap-vue/nuxt',
+    // ['bootstrap-vue/nuxt', { css: false }]
   ],
   // proxy: [
   //     ['/v1', { 

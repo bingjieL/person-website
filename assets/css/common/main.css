@@ -46,6 +46,10 @@ table {
 a:hover{
     text-decoration: none;
 }
+a{
+    text-decoration: none;
+    box-sizing: border-box;
+}
 /* 自定义全局样式 */
 
 html, body{

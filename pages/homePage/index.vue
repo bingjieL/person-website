@@ -3,10 +3,9 @@
         <section class="homePage-header">
             <figure class="homePage-bg">
                 <div id="homePage-bg" class="bg-img" v-show="isShowBanner">
-
                 </div>
             </figure>
-            <h1 class="header-title animated pulse slow" data-value="HI, JAY.BOY!">
+            <h1 class="header-title" data-value="HI, JAY.BOY!">
                 HI, JAY.BOY!
             </h1>
             <div class="header-tip">
@@ -92,71 +91,71 @@
                     </div>
                     <main class="content-discover-main">
                         <template v-for="(item,index) in discoverList">
-                            <article v-if="index%2 == 0" :key="index" class="content-discover-list-left">
+                            <article v-if="index%2 == 0" :key="index" class="content-discover-list-left" @click="goBlogDetail(item)">
                                 <figure class="img-wrap">
-                                    <img src="~/assets/img/home/cms-logo.jpg" alt="list-logo">
+                                    <img :src="item.blogImg" alt="list-logo">
                                 </figure>
                                 <div class="list-content">
                                     <p class="list-date">
                                         <span class="date-icon"><i class="iconfont icon-shijian"></i></span> 
-                                        <span class="date-title">发布时间{{'2018-09-07'}}</span>
+                                        <span class="date-title">发布时间{{item.updated_time.substring(0, 10)}}</span>
                                     </p>
-                                    <h4 class="line-clamp1 list-title">JavaScript + imgur API 上传图片 </h4>
+                                    <h4 class="line-clamp1 list-title">{{item.blogTitle}} </h4>
                                     <div class="list-tag">
                                         <div class="tag-see">
                                             <span class="see-icon"><i class="iconfont icon-chakan"></i></span> 
-                                            <span class="see-title">21热度</span>
+                                            <span class="see-title">{{item.blogHot}} 热度</span>
                                         </div>
                                         <div class="tag-see">
                                             <span class="see-icon"><i class="iconfont icon-liuyan1"></i></span> 
-                                            <span class="see-title">100 Likes</span>
+                                            <span class="see-title">{{item.blogLikes}} Likes</span>
                                         </div>
                                         <div class="tag-see">
                                             <span class="see-icon"><i class="iconfont icon-leixing"></i></span> 
-                                            <span class="see-title">Css</span>
+                                            <span class="see-title">{{item.blog_type?item.blog_type.blogTypeTitle: 'no Setting'}}</span>
                                         </div>
                                     </div>
                                     <p class="list-des line-clamp4">
-                                        css优先级需要关注两个维度：一个是样式距离，分别是内联样式、内部样式、外联样式；另一个则是根据属性的权重来判断。前者不用多说，这里详细分析一下后者。
+                                        {{item.blogDes}}
                                     </p>
                                     <p class="list-more"><i data-value='more' class="iconfont icon-more"></i></p>
                                 </div>
                             </article>
-                            <article v-if="index%2 != 0" :key="index" class="content-discover-list-right">
+                            <article v-if="index%2 != 0" :key="index" class="content-discover-list-right" @click="goBlogDetail(item)">
                                 <div class="list-content">
                                     <p class="list-date">
                                         <span class="date-icon"><i class="iconfont icon-shijian"></i></span> 
-                                        <span class="date-title">发布时间{{'2018-09-07'}}</span>
+                                        <span class="date-title">发布时间{{item.updated_time.substring(0, 10)}}</span>
                                     </p>
-                                    <h4 class="line-clamp1 list-title">JavaScript + imgur API 上传图片 </h4>
+                                    <h4 class="line-clamp1 list-title">{{item.blogTitle}} </h4>
                                     <div class="list-tag">
                                         <div class="tag-see">
                                             <span class="see-icon"><i class="iconfont icon-chakan"></i></span> 
-                                            <span class="see-title">21热度</span>
+                                            <span class="see-title">{{item.blogHot}} 热度</span>
                                         </div>
                                         <div class="tag-see">
                                             <span class="see-icon"><i class="iconfont icon-liuyan1"></i></span> 
-                                            <span class="see-title">100 Likes</span>
+                                            <span class="see-title">{{item.blogLikes}} Likes</span>
                                         </div>
                                         <div class="tag-see">
                                             <span class="see-icon"><i class="iconfont icon-leixing"></i></span> 
-                                            <span class="see-title">Css</span>
+                                            <span class="see-title">{{item.blog_type?item.blog_type.blogTypeTitle: 'no Setting'}}</span>
                                         </div>
                                     </div>
                                     <p class="list-des line-clamp4">
-                                        css优先级需要关注两个维度：一个是样式距离，分别是内联样式、内部样式、外联样式；另一个则是根据属性的权重来判断。前者不用多说，这里详细分析一下后者。
+                                        {{item.blogDes}}
                                     </p>
                                     <p class="list-more"><i data-value='more' class="iconfont icon-more"></i></p>
                                 </div>
                                 <figure class="img-wrap">
-                                    <img src="~/assets/img/home/cms-logo.jpg" alt="list-logo">
+                                    <img :src="item.blogImg" alt="list-logo">
                                 </figure>
                             </article>
                         </template>
                     </main>
                 </div>
             </div>
-            <div class="more-wrap">
+            <div class="more-wrap" v-if="discoverList.length>0">
                 <div class="more-btn" @click="goBlog">
                         More Blog
                 </div>
@@ -170,6 +169,7 @@
 import Swiper from '~/components/Swiper.vue'
 import Banner1 from  '~/assets/img/banner/bg.png'
 import Banner2 from  '~/assets/img/banner/about-banner.jpg'
+import { ApiGetBanner, ApiGetBlog } from '~/plugins/server/home'
 
 export default {
     layout: 'hasHeader',
@@ -190,7 +190,7 @@ export default {
     },
     data() {
         return{
-           discoverList:[1,2,3,4,5,7],
+           discoverList:[],
            bannerchangeClick: true,
            isShowBanner: false,
            bannerImgList: [
@@ -206,7 +206,8 @@ export default {
         }
     },
     mounted() {
-        this.setBanner()
+        this.getbanner()
+        this.getblog()
     },
     methods: {
         setBanner() {
@@ -279,6 +280,27 @@ export default {
         },
         goBlog() {
             this.$router.push({path: '/blog'})
+        },
+        getbanner() {
+            ApiGetBanner({}).then(res => {
+                if(res.code == 200 && res.data.count> 0){
+                    this.bannerImgList = res.data.rows
+                    this.setBanner()
+                }
+            })
+        },
+        getblog() {
+            ApiGetBlog({pageSize: 10, pageNumber:1}).then(res => {
+                if(res.code == 200 && res.data.count>0) {
+                    this.discoverList = res.data.rows
+                }
+            
+            })
+        },
+        goBlogDetail(blogDetail) {
+            let _title = blogDetail.blogTitle.replace(/\n/g, '_')
+            let blogId = blogDetail.blogId
+            this.$router.push({path: `/blogDetail/${_title}`, query: { bid: blogId}})
         }
     }
 }
