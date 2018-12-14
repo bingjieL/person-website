@@ -19,17 +19,17 @@
                 <ul class="header-recom">
                     <li class="lt" data-value='~~ 召唤魔法 ~~' @click="bannerChangeBack"><i class="iconfont icon-xiangzuoxiangyou-copy-copy"></i></li>
                     <li class="github" data-value='github'>
-                        <a href="" target="_blank">
+                        <a href="javascript:;" target="_blank">
                             <i class="iconfont icon-github"></i>
                         </a>
                     </li>
                     <li class="zhihu" data-value='知乎'>
-                        <a href="" target="_blank">
+                        <a href="javascript:;" target="_blank">
                             <i class="iconfont icon-zhihu1"></i>
                         </a>
                     </li>
                     <li class="weibo" data-value='微博'>
-                        <a href="" target="_blank">
+                        <a href="javascript:;" target="_blank">
                             <i class="iconfont icon-weibo"></i>
                         </a>
                     </li>
@@ -39,17 +39,17 @@
                         </a>
                     </li>
                     <li class="twitter" data-value='Twitter'>
-                        <a href="" target="_blank">
+                        <a href="javascript:;" target="_blank">
                             <i class="iconfont icon-twiter"></i>
                         </a>
                     </li>
                     <li class="cloudMusic" data-value='CloudMusic'>
-                        <a href="" target="_blank">
+                        <a href="javascript:;" target="_blank">
                             <i class="iconfont icon-wangyiyunyinleclick"></i>
                         </a>
                     </li>
                     <li class="email" data-value='Email'>
-                        <a href="" target="_blank">
+                        <a href="javascript:;" target="_blank">
                             <i class="iconfont icon-email"></i>
                         </a>
                     </li>
@@ -167,10 +167,8 @@
 <script>
 
 import Swiper from '~/components/Swiper.vue'
-import Banner1 from  '~/assets/img/banner/bg.png'
-import Banner2 from  '~/assets/img/banner/about-banner.jpg'
 import { ApiGetBanner, ApiGetBlog } from '~/plugins/server/home'
-
+import Banner1 from '~/assets/img/banner/searchPage.jpg'
 export default {
     layout: 'hasHeader',
     scrollToTop: true,
@@ -197,10 +195,6 @@ export default {
                {
                     bannerId: '1',
                     bannerImg: Banner1
-               },
-               {
-                    bannerId: '2',
-                    bannerImg: Banner2
                }
            ]
         }

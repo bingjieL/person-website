@@ -172,4 +172,105 @@
             }
         }
     }
+    .search-wrap{
+        background: #fff;
+        width: 100%;
+        height: 100vh;
+        position: fixed;
+        opacity: 0.93;
+        z-index: 99999999;
+        display: none;
+        animation: searchScale 0.6s linear;
+        .cover{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('~/assets/img/logo/iloli.gif') bottom right no-repeat;
+        }
+        >i{
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            position: absolute;
+            top: 50px;
+            right: 40px;
+            font-size: 44px;
+            z-index: 99;
+        }
+        .search{
+            z-index: 9;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0 auto; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .main-wrap{
+                width: 600px;
+                .searchTitle{
+                    color: color;
+                    font-size: 16px;
+                    line-height: 20px;
+                    margin-bottom: 20px; 
+                }
+                .input-wrap{
+                    border: 1px solid #ccc;
+                    color: #666;
+                    height: 50px;
+                    border-radius: 25px;
+                    display: flex;
+                    >i{
+                        display: block;
+                        width: 60px;
+                        height: 100%;
+                        line-height: 50px;
+                        font-size: 26px;
+                        text-align: center;
+                        cursor: pointer;
+                    }
+                    >input{
+                        flex: 1;
+                        height: 100%;
+                        background: none;
+                        border: 0;
+                        font-size: 16px;
+                        text-indent: 15px;
+                        &:focus{
+                            border: none;
+                            outline:none;
+                        }
+                    }
+                }
+                
+              
+            }
+        }
+        @keyframes searchScale {
+            0% {
+                transform: scale(0.7)  
+            }
+            20% {
+               transform: scale(0.8)  
+            }
+            40%{
+                transform: scale(0.9)  
+            }
+            60%{
+                transform: scale(1.0)  
+            }
+            80%{
+                transform: scale(0.98) 
+            }
+            100%{
+                transform: scale(1)  
+            }
+        }
+    }
 }

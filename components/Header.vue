@@ -49,10 +49,25 @@
                
             </nav>
             <div class="search-header">
-                    <span class="animated search" ><i class="iconfont icon-search"></i></span>
-                    <span ref='MineIcon' class="animated mine" @mouseover="setHoverClass('MineIcon', 'swing')" @mouseout="rmHoverClass('MineIcon', 'swing')"><i class="iconfont icon-wode"></i></span>
+                    <span class="animated search" @click="search"><i class="iconfont icon-search"></i></span>
+                    <a href="http://cms.8bjl.cn" target="_blank" rel="noopener noreferrer">
+                        <span ref='MineIcon' class="animated mine" @mouseover="setHoverClass('MineIcon', 'swing')" @mouseout="rmHoverClass('MineIcon', 'swing')"><i class="iconfont icon-wode"></i></span>
+                    </a>
             </div>
         </header>
+        <div class="search-wrap" id="search-wrap" @keydown.enter="goSearch">
+            <div class="search">
+                <div class="main-wrap">
+                    <p class="searchTitle">~~ 该来她总会来的...</p>
+                    <div class="input-wrap">
+                        <i class="iconfont icon-search" @click="goSearch"></i>
+                        <input type="text" v-model="searchStr" required placeholder="Input the key words about Blog ">
+                    </div>
+                </div>
+            </div>
+            <div class="cover"></div>
+            <i @click="searchClose" class="iconfont icon-cuowu"></i>
+        </div>
         <div class="goTop" ref='goTop' @click="gotop">
             <img  src="~/assets/img/logo/scroll.png" alt="scroll">
         </div>
@@ -61,6 +76,11 @@
 
 <script>
 export default {
+    data() {
+        return {
+            searchStr: ''
+        }
+    },
     mounted () {
         this.changeGoToplocation()
         this.changeScrollProgressWidth()
@@ -109,6 +129,17 @@ export default {
             let _scrollHeight = document.body.scrollHeight - _clientHeight  
             let _scrollTop = document.documentElement.scrollTop||document.body.scrollTop
             this.$refs.scrollProgress.style.width = `${(_scrollTop/_scrollHeight)*100}%`
+        },
+        search() {
+            $('#search-wrap').show()
+        },
+        searchClose() {
+            $('#search-wrap').fadeOut()
+        },
+        goSearch() {
+            $('#search-wrap').fadeOut()
+            this.searchStr = ''
+            this.$router.push({path: '/searchPage', query: {_s: this.searchStr}})
         }
     }
 }

@@ -12,11 +12,21 @@
 </template>
 
 <script>
+import { ApiGetBlogDetail } from '~/plugins/server/blogDetail'
+
 export default {
     asyncData(context) {
         return {
+            bid: context.query.bid,
             pagetitle: context.params.title
         }
+    },
+    validate({ params, query }) {
+      if(!params.title){
+          return false
+      }else{
+          return true
+      }
     },
     layout: 'hasHeader',
     scrollToTop: true,
@@ -35,6 +45,17 @@ export default {
     },
     data() {
 
+    },
+    mounted() {
+        console.log('---> this.bid', this.bid)
+        this.getBlogDetail({blogId: this.bid})
+    },
+    methods: {
+        getBlogDetail(params) {
+            ApiGetBlogDetail(params).then(res => {
+                console.log('----> blog detail res', res);
+            })
+        }
     }
 
 }
