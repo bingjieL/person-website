@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { ApiGetBlogDetail } from '~/plugins/server/blogDetail'
+import { ApiGetBlogDetail, ApiAddBlogHot} from '~/plugins/server/blogDetail'
 
 export default {
     asyncData(context) {
@@ -22,7 +22,7 @@ export default {
         }
     },
     validate({ params, query }) {
-      if(!params.title){
+      if(!params.title || !query.bid){
           return false
       }else{
           return true
@@ -47,14 +47,17 @@ export default {
 
     },
     mounted() {
-        console.log('---> this.bid', this.bid)
         this.getBlogDetail({blogId: this.bid})
+        this.addBlogHot({blogId: this.bid})
     },
     methods: {
         getBlogDetail(params) {
             ApiGetBlogDetail(params).then(res => {
                 console.log('----> blog detail res', res);
             })
+        },
+        addBlogHot(params) {
+            ApiAddBlogHot(params).then(res => {})
         }
     }
 
