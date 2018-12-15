@@ -3,16 +3,43 @@
        <div class="banner">
            <div class="img animated pulse slow">
            </div>
-           <h3>Blog Detail</h3>
+           <h3>{{blogDetail.blogTitle}}</h3>
        </div>
        <main class="detail-main">
-           
+           <header class="blog-des">
+               <h3>
+                   <span class="first-des">{{blogDetail.blogDes?blogDetail.blogDes.substring(0,1): ''}}</span>
+                   <span class="des">{{blogDetail.blogDes?blogDetail.blogDes.substring(1, blogDetail.blogDes.length): ''}}</span>
+                </h3>
+           </header>
+           <div class="main-content" v-html="blogDetail.blogContent"></div>
+           <div class="main-footer">
+               <div class="left">
+                   <img src="~/assets/img/home/node-logo.jpg" alt="logo">
+               </div>
+                <div class="tips">
+                   <p>~~~ 小主人,  别忘记 戳下小心心哦!</p> 
+                </div>
+               <div class="right">
+                    <p class="date">
+                       <span class="date-icon"><i class="iconfont icon-shijian"></i></span>
+                       <span class="date-title">发布时间{{blogDetail.updated_time?blogDetail.updated_time.substring(0, 10): ''}}</span> 
+                    </p>
+                    <p class="dis" v-if="!isAddLikes"> 
+                        <i  class="iconfont icon-aixin_fuzhi"></i>
+                    </p>
+                    <p class="no-dis">
+                        <i v-if="isAddLikes" @click="addLikes" class="iconfont icon-aixin"></i>
+                    </p>
+               </div>
+           </div>
        </main>
     </section>
 </template>
 
 <script>
-import { ApiGetBlogDetail, ApiAddBlogHot} from '~/plugins/server/blogDetail'
+import { ApiGetBlogDetail, ApiAddBlogHot, ApiAddBlogLikes} from '~/plugins/server/blogDetail'
+// import Tocbot from 'tocbot'
 
 export default {
     asyncData(context) {
@@ -44,7 +71,10 @@ export default {
         }
     },
     data() {
-
+        return{
+            blogDetail: {},
+            isAddLikes: true
+        }
     },
     mounted() {
         this.getBlogDetail({blogId: this.bid})
@@ -54,18 +84,39 @@ export default {
         getBlogDetail(params) {
             ApiGetBlogDetail(params).then(res => {
                 console.log('----> blog detail res', res);
+                if(res.code == 200) {
+                    this.blogDetail = res.data
+                }
             })
         },
         addBlogHot(params) {
             ApiAddBlogHot(params).then(res => {})
+        },
+        addLikes() {
+            console.log('---> test')
+            this.addBlogLikes({blogId: this.bid})
+        },
+        addBlogLikes(params) {
+            ApiAddBlogLikes(params).then(res => {
+                if(res.code == 200) {
+                    console.log('aaaa')
+                    this.isAddLikes = false
+                }
+            })
         }
+        
     }
 
 }
 </script>
 
-<style scoped lang="scss">
+
+
+
+<style lang="scss" scoped>
 .blog-wrap{
+    width: 100%;
+    margin-bottom: 100px; 
     .banner{
         width: 100%;
         height: 65vh;
@@ -82,7 +133,7 @@ export default {
         h3{
             display: inline-block;
             padding: 20px;
-            font-size:  50px;
+            font-size:  36px;
             font-weight: 500;
             text-align: center;
             color: linear-gradient(270deg,#c4987a 33%,#ffd5bf 73%);
@@ -105,6 +156,141 @@ export default {
             bottom: -20px;
         }
     }
-    
+    .detail-main{
+        width: 800px;
+        margin: 0 auto 50px;
+        .blog-des{
+            color: #666;
+            font-weight: 500;
+            line-height: 50px;
+            border-bottom: 1px dashed #ddd;
+            letter-spacing: 0.6px;
+            >h3{
+                .first-des {
+                    font-size: 28px;
+                    display: table-cell;
+                    padding: 0 10px;
+                    font-weight: 600;
+                    color: #404040;
+                }
+                .des{
+                    font-size: 16px;
+                    display: table-cell;
+                }
+            }
+        }
+        .main-content{
+            padding: 50px 0px;
+            height: auto;
+        }
+        .main-footer{
+            border-top: 1px dashed #ddd;
+            border-bottom:  1px dashed #ddd;
+            padding: 20px;
+            margin: 50px;
+            display: flex;
+            justify-content: space-between;
+            .left{
+                width: 60px;
+                height: 60px;
+                border-radius: 100%;
+                img{
+                    height: 100%;
+                    width: 100%;
+                    border-radius: 100%;
+                }
+            }
+            .tips{
+                position: relative;
+                width: 300px;
+                p{
+                    width: 100%;
+                    line-height: 60px;
+                    display: inline-block;
+                    font-size:  16px;
+                    font-weight: 500;
+                    text-align: center;
+                    color: linear-gradient(270deg,#c4987a 33%,#ffd5bf 73%);
+                    position: absolute;
+                    top: 0;
+                    left: 50%;
+                    transition: all 0.5s ease;
+                    background-image:  linear-gradient(270deg,#c4987a 33%,#ffd5bf 73%);
+                    background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    transform: translateX(-50%);
+                }
+            }
+            .right {
+                text-align: center;
+                width: 180px;
+                font-size: 14px;
+                font-weight: 300;
+                .date{
+                    line-height: 40px;
+                    span{
+                        >i{
+                            font-size: 20px;
+                        }
+                    }
+                }
+                .no-dis {
+                    >i{
+                        display: inline-block;
+                        cursor: pointer;
+                        font-size: 24px;
+                        transition: all 0.5s ease;
+                        &:hover{
+                            transform:  scale(1.3)
+                        }
+                    }
+                }
+                .dis {
+                    text-align: center;
+                    >i{
+                        display: inline-block;
+                        cursor: pointer;
+                        font-size: 24px;
+                        transition: all 0.5s ease;
+                        color: red;
+                        cursor: not-allowed;
+                        &:hover{
+                            transform:  scale(1.3)
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
 }
+</style>
+<style>
+
+    .main-content >h2 {
+        height: 50px;
+        border-bottom: 1px dashed #ddd;
+        margin: 20px 0;
+        position: relative;
+        font-size: 16px;
+        color: #666;
+        padding-left: 30px;
+        line-height: 50px;
+        font-size: 22px; 
+        font-weight: 500;
+    } 
+    .main-content p {
+        color: #404040;
+        margin: 10px 0 0 15px;
+    }
+    .main-content >h2::after {
+        content: '#';
+        position: absolute;
+        height: 50px;
+        width: 30px;
+        color: #ff6d6d;
+        left: 0;
+        text-align: center;
+        line-height: 50px;
+    }
 </style>

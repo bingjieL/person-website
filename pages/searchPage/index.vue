@@ -45,7 +45,8 @@
 
 <script>
 import { ApiGetBlog, ApiSearchBlog} from '~/plugins/server/search'
-import Test from '~/assets/img/home/cms-logo.jpg'
+
+
 export default {
     asyncData(context) {
         let {_s=''} = context.route.query

@@ -9,3 +9,6 @@ export const ApiAddBlogHot= (params) => {
     return request.post(`${hostUrl}/api/blog/addBlogHot`, params)
 }
 
+export const ApiAddBlogLikes= (params) => {
+    return request.post(`${hostUrl}/api/blog/addBlogLike`, params)
+}

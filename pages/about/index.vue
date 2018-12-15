@@ -1,11 +1,12 @@
 <template>
     <section class="blog-wrap">
-       <div class="banner " >
+       <div class="banner">
            <div class="img animated pulse slow">
            </div>
            <h3>About</h3>
        </div>
     </section>
+    
 </template>
 
 <script>
