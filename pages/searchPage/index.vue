@@ -9,7 +9,7 @@
            <div class="input-wrap" @keydown.enter="search">
                 <div class="input">
                     <i class="iconfont icon-search" @click="search"></i>
-                    <input type="text" v-model="searchStr" required placeholder="Input the key words about Blog ">
+                    <input type="text" v-model.trim="searchStr" required placeholder="Input the key words about Blog ">
                 </div>   
            </div>
            <div class="searchList">

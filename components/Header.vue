@@ -61,7 +61,7 @@
                     <p class="searchTitle">~~ 该来她总会来的...</p>
                     <div class="input-wrap">
                         <i class="iconfont icon-search" @click="goSearch"></i>
-                        <input type="text" v-model="searchStr" required placeholder="Input the key words about Blog ">
+                        <input type="text" v-model.trim="searchStr" required placeholder="Input the key words about Blog ">
                     </div>
                 </div>
             </div>
@@ -137,9 +137,9 @@ export default {
             $('#search-wrap').fadeOut()
         },
         goSearch() {
+            this.$router.push({path: '/searchPage', query: {_s: this.searchStr}})
             $('#search-wrap').fadeOut()
             this.searchStr = ''
-            this.$router.push({path: '/searchPage', query: {_s: this.searchStr}})
         }
     }
 }
