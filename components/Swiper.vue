@@ -110,16 +110,13 @@ import { ApiGetSwiper } from '~/plugins/server/swiper'
     methods: {
         getSwiperList() {
             ApiGetSwiper({}).then(res => {
-                console.log('---> res', res)
                 if(res.code == 200 && res.data.count>0){
                     this.swiperList = res.data.rows
                     this.showSwiper = true
                 }
             })
         }
-        
     }
-    
   }
 </script>
 

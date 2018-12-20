@@ -23,13 +23,13 @@
                     </li>
                     <li @mouseover="setHoverClass('XinIcon', 'rotateIn')" @mouseout="rmHoverClass('XinIcon', 'rotateIn')">
                         <nuxt-link to='/music'>
-                            <span ref='XinIcon' class="icon animated"><i class="iconfont icon-shenghuoaixinjuanzeng"></i></span> 
+                            <span ref='XinIcon' class="icon animated"><i class="iconfont icon-yinle"></i></span> 
                             Music
                         </nuxt-link>
                     </li>
                     <li @mouseover="setHoverClass('lockIcon', 'flash')" @mouseout="rmHoverClass('lockIcon', 'flash')">
                         <nuxt-link to='/book'>
-                            <span ref='lockIcon' class="icon animated"><i class="iconfont icon-ic_vpn_lock"></i></span> 
+                            <span ref='lockIcon' class="icon animated"><i class="iconfont icon-shu"></i></span> 
                             书单
                         </nuxt-link>
                     </li>

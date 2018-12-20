@@ -1,15 +1,46 @@
 <template>
-    <section class="blog-wrap">
-       <div class="banner " >
+    <section class="music-wrap">
+       <header class="banner " >
            <div id="music-banner" class="img animated pulse slow">
-               <img v-show="bannerImg" src="~/assets/img/banner/entertainment-banner.jpg" @load="bannerImgLoad" alt="" srcset="">
+               <img v-show="bannerImg" src="~/assets/img/banner/entertainment-banner.jpg" alt="music-logo" srcset="">
            </div>
            <h3>Music</h3>
-       </div>
+       </header>
+       <main class="music-main">
+            <h3 class="music-title">
+                <span class="icon"><i class="iconfont icon-yinle"></i></span>
+               <span class="content">歌单推荐</span> 
+            </h3>
+            <div class="music-list">
+                <article class="music-item" v-for="(item, index) in sheetList" :key="index">
+                    <figure class="img-wrap">
+                        <img :src="item.sheetImg" alt="">
+                    </figure>
+                    <p class="title animated pulse slow">{{item.sheetTitle}}</p>
+                    <div class="tags">
+                        <span class="tag-item">{{item.sheetTag}}</span>
+                    </div>
+                    <p class="des">
+                        <a :href="item.sheetUrl" target="_blank" rel="noopener noreferrer">
+                            <template v-if="item.sheetDes.length>10">
+                                {{item.sheetDes.substring( 0, (item.sheetDes.length - 10))}}
+                                <br>
+                                {{item.sheetDes.substring((item.sheetDes.length - 10), item.sheetDes.length)}}
+                            </template>
+                            <template v-else>
+                                {{item.sheetDes}}
+                            </template>
+                        </a>
+                    </p>
+                </article>
+            </div>
+       </main>
     </section>
 </template>
 
 <script>
+import { ApiGetSheet } from '~/plugins/server/musicSheet'
+
 export default {
     layout: 'hasHeader',
     scrollToTop: true,
@@ -27,64 +58,24 @@ export default {
     data() {
         return{
             bannerImg: false,
+            sheetList: []
         }
     },
     mounted() {
-      
+      this.getSheetList()
     },
     methods: {
-        bannerImgLoad() {
-            $('#music-banner').css({
-                
-            })
-        }
+       getSheetList() {
+           ApiGetSheet({}).then(res => {
+               if(res.code == 200 ) {
+                   this.sheetList = res.data.rows
+               }
+           })
+       }
     }
 }
 </script>
 
 <style scoped lang="scss">
-.blog-wrap{
-    .banner{
-        width: 100%;
-        height: 65vh;
-        overflow: hidden;
-        position: relative;
-        text-align: center;
-        .img {
-            width: 100%;
-            height: 65vh;
-            background: url("~/assets/img/banner/entertainment-banner.jpg") center no-repeat;
-            // background: url("~/assets/img/banner/loader-svg.svg") center no-repeat;
-            background-size: cover; 
-            transition: all 0.5s ease;
-        }
-        h3{
-            display: inline-block;
-            padding: 20px;
-            font-size:  50px;
-            font-weight: 500;
-            text-align: center;
-            color: linear-gradient(270deg,#c4987a 33%,#ffd5bf 73%);
-            position: absolute;
-            top: 30vh;
-            transition: all 0.5s ease;
-            background-image:  linear-gradient(270deg,#c4987a 33%,#ffd5bf 73%);
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            transform: translateX(-50%)
-            
-        }
-         &::after{
-            content: '';
-            width: 150%;
-            position: absolute;
-            border-radius: 100%;
-            left: -25%;
-            background: #fff;
-            height: 100px;
-            bottom: -20px;
-        }
-    }
-    
-}
+@import '~/assets/css/music.scss';
 </style>

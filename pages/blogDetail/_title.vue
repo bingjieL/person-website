@@ -15,7 +15,7 @@
            <div class="main-content" v-html="blogDetail.blogContent"></div>
            <div class="main-footer">
                <div class="left">
-                   <img src="~/assets/img/home/node-logo.jpg" alt="logo">
+                   <img src="~/assets/img/min-banner/header-logo.jpg" alt="logo">
                </div>
                 <div class="tips">
                    <p>~~~ 小主人,  别忘记 戳下小心心哦!</p> 
@@ -83,7 +83,6 @@ export default {
     methods: {
         getBlogDetail(params) {
             ApiGetBlogDetail(params).then(res => {
-                console.log('----> blog detail res', res);
                 if(res.code == 200) {
                     this.blogDetail = res.data
                 }
@@ -93,13 +92,11 @@ export default {
             ApiAddBlogHot(params).then(res => {})
         },
         addLikes() {
-            console.log('---> test')
             this.addBlogLikes({blogId: this.bid})
         },
         addBlogLikes(params) {
             ApiAddBlogLikes(params).then(res => {
                 if(res.code == 200) {
-                    console.log('aaaa')
                     this.isAddLikes = false
                 }
             })
@@ -114,161 +111,12 @@ export default {
 
 
 <style lang="scss" scoped>
-.blog-wrap{
-    width: 100%;
-    margin-bottom: 100px; 
-    .banner{
-        width: 100%;
-        height: 65vh;
-        overflow: hidden;
-        position: relative;
-        text-align: center;
-        .img {
-            width: 100%;
-            height: 65vh;
-            background: url("~/assets/img/banner/writing.jpg") center no-repeat;
-            background-size: cover; 
-            transition: all 0.5s ease;
-        }
-        h3{
-            display: inline-block;
-            padding: 20px;
-            font-size:  36px;
-            font-weight: 500;
-            text-align: center;
-            color: linear-gradient(270deg,#c4987a 33%,#ffd5bf 73%);
-            position: absolute;
-            top: 30vh;
-            transition: all 0.5s ease;
-            background-image:  linear-gradient(270deg,#c4987a 33%,#ffd5bf 73%);
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            transform: translateX(-50%)
-        }
-        &::after{
-            content: '';
-            width: 150%;
-            position: absolute;
-            border-radius: 100%;
-            left: -25%;
-            background: #fff;
-            height: 100px;
-            bottom: -20px;
-        }
-    }
-    .detail-main{
-        width: 800px;
-        margin: 0 auto 50px;
-        .blog-des{
-            color: #666;
-            font-weight: 500;
-            line-height: 50px;
-            border-bottom: 1px dashed #ddd;
-            letter-spacing: 0.6px;
-            >h3{
-                .first-des {
-                    font-size: 28px;
-                    display: table-cell;
-                    padding: 0 10px;
-                    font-weight: 600;
-                    color: #404040;
-                }
-                .des{
-                    font-size: 16px;
-                    display: table-cell;
-                }
-            }
-        }
-        .main-content{
-            padding: 50px 0px;
-            height: auto;
-        }
-        .main-footer{
-            border-top: 1px dashed #ddd;
-            border-bottom:  1px dashed #ddd;
-            padding: 20px;
-            margin: 50px;
-            display: flex;
-            justify-content: space-between;
-            .left{
-                width: 60px;
-                height: 60px;
-                border-radius: 100%;
-                img{
-                    height: 100%;
-                    width: 100%;
-                    border-radius: 100%;
-                }
-            }
-            .tips{
-                position: relative;
-                width: 300px;
-                p{
-                    width: 100%;
-                    line-height: 60px;
-                    display: inline-block;
-                    font-size:  16px;
-                    font-weight: 500;
-                    text-align: center;
-                    color: linear-gradient(270deg,#c4987a 33%,#ffd5bf 73%);
-                    position: absolute;
-                    top: 0;
-                    left: 50%;
-                    transition: all 0.5s ease;
-                    background-image:  linear-gradient(270deg,#c4987a 33%,#ffd5bf 73%);
-                    background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    transform: translateX(-50%);
-                }
-            }
-            .right {
-                text-align: center;
-                width: 180px;
-                font-size: 14px;
-                font-weight: 300;
-                .date{
-                    line-height: 40px;
-                    span{
-                        >i{
-                            font-size: 20px;
-                        }
-                    }
-                }
-                .no-dis {
-                    >i{
-                        display: inline-block;
-                        cursor: pointer;
-                        font-size: 24px;
-                        transition: all 0.5s ease;
-                        &:hover{
-                            transform:  scale(1.3)
-                        }
-                    }
-                }
-                .dis {
-                    text-align: center;
-                    >i{
-                        display: inline-block;
-                        cursor: pointer;
-                        font-size: 24px;
-                        transition: all 0.5s ease;
-                        color: red;
-                        cursor: not-allowed;
-                        &:hover{
-                            transform:  scale(1.3)
-                        }
-                    }
-                    
-                }
-            }
-        }
-    }
-}
+    @import '~/assets/css/blogDetail.scss';
 </style>
 <style>
 
     .main-content >h2 {
-        height: 50px;
+        /* height: 50px; */
         border-bottom: 1px dashed #ddd;
         margin: 20px 0;
         position: relative;

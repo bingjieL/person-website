@@ -35,7 +35,7 @@ service.interceptors.response.use(
   },
   error => {
     // let url = error.response && error.response.config.url
-    console.log('---> error', error.response)
+    console.log('---> error', error)
     if (error.response) {
       switch (error.response.status) {
         case 401:

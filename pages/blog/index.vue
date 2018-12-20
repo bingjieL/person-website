@@ -5,7 +5,7 @@
            </div>
            <h3>Blog</h3>
        </div>
-       <main class="blog-main">
+       <main class="blog-main" id="blog-main">
            <div class="blog-list-wrap" id="blog-list-wrap">
                 <template v-for="(item,index) in blogList">
                     <article v-if="index%2 == 0" :key="index" class="blogList-left" @click="goBlogDetail(item)">
@@ -73,7 +73,7 @@
                     ~~ 亲爱的小主大人, 没有找到相关Blog。 换个姿势再来一次哦！！！
                 </p>
            </div>
-           <aside class="tags-aside">
+           <aside class="tags-aside" id="tags-aside">
                <div class="tags-wrap" id="tags-wrap">
                    <div class="header">
                        <div class="icon"> <i class="iconfont icon-biaoqian"></i></div> 
@@ -96,6 +96,7 @@
                 </ul>
             </div>
        </main>
+       <p class="sumTips" v-show="showBottomTip && count != 0"> ~~ 小鬼我可是有底线 ~~</p>
     </section>
 </template>
 
@@ -105,7 +106,6 @@ import { ApiGetBlogType, ApiGetBlog, ApiGetBlogByType } from '~/plugins/server/b
 export default {
     layout: 'hasHeader',
     scrollToTop: true,
-    isloading: true,
     head: {
         title: 'Blog Page || ~~Jay的小栈',
         meta: [
@@ -123,9 +123,12 @@ export default {
             blogList: [],
             blogTypeList: [],
             showAsideHeight:0,
+            count: 0,
+            showBottomTip: false,
             form: {
                 pageSize: 10,
-                pageNumber: 1
+                pageNumber: 1,
+                blogTypeId: null
             }
         }
     },
@@ -133,24 +136,43 @@ export default {
         this.getBlogType()
         let {_btId} = this.$route.query
         if(_btId) {
-            this.searchByType(_btId)
+            this.form.blogTypeId = _btId
+            this.searchByType(this.form.blogTypeId)
         }else{
             this.getBlog(this.form)
         }
         this.changeAsideShow()
     },
+    destroyed() {
+        window.removeEventListener('scroll', this.changeAsideShow)
+    },
     methods: {
         changeAsideShow() {
-            this.showAsideHeight = $('#banner').height() + $('#tags-wrap').height() 
+            let showAsideHeight =$('#blog-main').offset().top
             $(window).resize(()=> {
-                this.showAsideHeight = $('#banner').height() + $('#tags-wrap').height()
+                showAsideHeight = $('#blog-main').offset().top
             })
             $(window).scroll(()=>{ 
                 let scrollTop = $(window).scrollTop()
-                if(scrollTop > this.showAsideHeight){
+                let Height = $(document).height()
+                let windowHeight = $(window).height()
+                if(windowHeight + scrollTop + 60 > Height){
+                    if(this.count> this.blogList) {
+                        this.form.pageNumber = this.form.pageNumber + 1
+                        console.log('----> 分页',  this.form)
+                        if(this.form.blogTypeId){
+                            this.searchByType(this.form.blogTypeId)
+                        }else{
+                            this.getBlog(this.form)
+                        }
+                    }
+                }
+                if(scrollTop > showAsideHeight + 50){
                     $('#fixed-tag').fadeIn();
-                }else{
-                    $('#fixed-tag').hide();
+                    $('#tags-aside').hide()
+                }else {
+                     $('#fixed-tag').hide();
+                    $('#tags-aside').show()
                 }
             });
         },
@@ -167,10 +189,15 @@ export default {
             })
         },
         getBlog(params) {
-            ApiGetBlog().then(res => {
+            ApiGetBlog(params).then(res => {
                 this.isloading = false
-                if(res.code == 200 && res.data.count>0) {
-                    this.blogList = res.data.rows
+                if(res.code == 200) {
+                    this.count = res.data.count
+                    let _blogList  = res.data.rows
+                    this.blogList = _blogList.concat(this.blogList)
+                    if(this.blogList.length == res.data.count) {
+                        this.showBottomTip = true
+                    }
                 }
                 $('#blog-list-wrap').addClass('animated fadeInUp slow');
             })
@@ -179,7 +206,12 @@ export default {
             ApiGetBlogByType(params).then(res => {
                 this.isloading = false
                 if(res.code == 200 && res.data) {
-                    this.blogList = res.data.rows
+                    this.count = res.data.count
+                    let _blogList  = res.data.rows
+                    this.blogList = _blogList.concat(this.blogList)
+                    if(this.blogList.length == res.data.count) {
+                        this.showBottomTip = true
+                    }
                 }
                 $('#blog-list-wrap').addClass('animated fadeInUp slow');
             })
@@ -187,21 +219,22 @@ export default {
         searchGetAll() {
             this.isloading = true
             $('#blog-list-wrap').removeClass('animated fadeInUp slow');
-            this.getBlog(this.form)
             $('html,body').animate({scrollTop: '0px'}, 800)
+            this.form.blogTypeId = null
+            this.form.pageNumber = 1
+            this.blogList = []
+            this.getBlog(this.form)
             this.$router.push({path: '/blog'})
         },
         searchByType(blogTypeId) {
             this.isloading = true
             $('#blog-list-wrap').removeClass('animated fadeInUp slow');
-            let params = {
-                blogTypeId: blogTypeId,
-                pageSize: 10,
-                pageNumber: 1
-            }
             $('html,body').animate({scrollTop: '0px'}, 800)
+            this.form.blogTypeId = blogTypeId
+            this.form.pageNumber = 1
+            this.blogList = []
             this.$router.push({path: '/blog',query: {_btId: blogTypeId}})
-            this.getBlogByType(params)
+            this.getBlogByType(this.form)
         }
     }
 
