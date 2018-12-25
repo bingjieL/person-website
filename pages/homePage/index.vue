@@ -98,7 +98,7 @@
                                 <div class="list-content">
                                     <p class="list-date">
                                         <span class="date-icon"><i class="iconfont icon-shijian"></i></span> 
-                                        <span class="date-title">发布时间{{item.updated_time.substring(0, 10)}}</span>
+                                        <span class="date-title">发布时间 {{item.updated_time | DateFormat('YYYY-MM-DD HH:mm:ss')}}</span>
                                     </p>
                                     <h4 class="line-clamp1 list-title">{{item.blogTitle}} </h4>
                                     <div class="list-tag">
@@ -125,7 +125,7 @@
                                 <div class="list-content">
                                     <p class="list-date">
                                         <span class="date-icon"><i class="iconfont icon-shijian"></i></span> 
-                                        <span class="date-title">发布时间{{item.updated_time.substring(0, 10)}}</span>
+                                        <span class="date-title">发布时间 {{item.updated_time | DateFormat('YYYY-MM-DD HH:mm:ss')}}</span>
                                     </p>
                                     <h4 class="line-clamp1 list-title">{{item.blogTitle}} </h4>
                                     <div class="list-tag">

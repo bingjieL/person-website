@@ -1,4 +1,11 @@
+import { hostUrl } from '~/plugins/server/apiConfig'
+
 const domHover = {
+    computed: {
+        $uploadUrl() {
+            return `${hostUrl}/api/upFiles`
+        }
+    },
     methods: {
         $domHover(ref, className) {
             className.split(';').forEach(item => {

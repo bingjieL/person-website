@@ -25,6 +25,9 @@ module.exports = {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ],
+    script: [
+      {src: 'https://hm.baidu.com/hm.js?27949d3852c79707e1c171e9a9f542d9'}
+    ],
     noscript: [
       { innerHTML: '~~~~~~ 小主删库跑路咯!   ~~~ (꒦_꒦) (꒦_꒦) ~~~' }
     ]
@@ -32,7 +35,8 @@ module.exports = {
   css:[
     '~/assets/css/common/main.css',
     '~/static/icon/iconfont.css',
-    'swiper/dist/css/swiper.css' // swiper
+    'swiper/dist/css/swiper.css', // swiper
+    'element-ui/lib/theme-chalk/index.css'
   ],
   router: {
     base: '/',
@@ -50,13 +54,14 @@ module.exports = {
  
   plugins: [
      { src: '~/plugins/router', ssr: true },
+     { src: '~/plugins/element', ssr: false},
      { src: '~/plugins/animate', ssr: false},
      { src: '~/plugins/scroll-progress', ssr: false},
      { src: '~/plugins/copy-right', ssr: false},
      { src: '~/plugins/ga', ssr: false},
      { src: '~/plugins/mixin', ssr: false},
      { src: '~/plugins/swiper.js', ssr: false },
-     
+     { src: '~/plugins/filters', ssr: false}
   ],
   /*
   ** Customize the progress bar color
