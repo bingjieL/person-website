@@ -86,7 +86,7 @@
                             <i class="iconfont icon-faxian"></i>
                         </span>
                         <h3 class="discover-header-title">
-                            New Release!
+                            The Latest!
                         </h3>
                     </div>
                     <main class="content-discover-main">

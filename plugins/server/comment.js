@@ -12,3 +12,11 @@ export const ApiAddComment= (params) => {
 export const ApiAddReplay= (params) => {
     return request.post(`${hostUrl}/api/comment/addReplay`, params)
 }
+
+export const ApiAddReplayPraise= (params) => {
+    return request.post(`${hostUrl}/api/comment/replayAddPraise`, params)
+}
+
+export const ApiAddCommentPraise= (params) => {
+    return request.post(`${hostUrl}/api/comment/commentAddPraise`, params)
+}

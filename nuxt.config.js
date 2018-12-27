@@ -54,14 +54,15 @@ module.exports = {
  
   plugins: [
      { src: '~/plugins/router', ssr: true },
-     { src: '~/plugins/element', ssr: false},
+     { src: '~/plugins/element', ssr: true},
      { src: '~/plugins/animate', ssr: false},
      { src: '~/plugins/scroll-progress', ssr: false},
      { src: '~/plugins/copy-right', ssr: false},
      { src: '~/plugins/ga', ssr: false},
-     { src: '~/plugins/mixin', ssr: false},
+     { src: '~/plugins/mixin', ssr: true},
      { src: '~/plugins/swiper.js', ssr: false },
-     { src: '~/plugins/filters', ssr: false}
+     { src: '~/plugins/filters', ssr: false},
+     { src: '~/plugins/vueUtils', ssr: false}
   ],
   /*
   ** Customize the progress bar color

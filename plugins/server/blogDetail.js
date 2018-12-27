@@ -12,3 +12,23 @@ export const ApiAddBlogHot= (params) => {
 export const ApiAddBlogLikes= (params) => {
     return request.post(`${hostUrl}/api/blog/addBlogLike`, params)
 }
+
+export const ApiGetCommentList= (params) => {
+    return request.post(`${hostUrl}/api/comment/getCommentList`, params)
+}
+
+export const ApiAddComment= (params) => {
+    return request.post(`${hostUrl}/api/comment/addComment`, params)
+}
+
+export const ApiAddReplay= (params) => {
+    return request.post(`${hostUrl}/api/comment/addReplay`, params)
+}
+
+export const ApiAddReplayPraise= (params) => {
+    return request.post(`${hostUrl}/api/comment/replayAddPraise`, params)
+}
+
+export const ApiAddCommentPraise= (params) => {
+    return request.post(`${hostUrl}/api/comment/commentAddPraise`, params)
+}

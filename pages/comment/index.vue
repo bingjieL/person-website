@@ -7,43 +7,29 @@
        </div>
        <main class="main-wrap">
            <div class="content-basic">
-                <no-ssr>
-                    <el-form :inline="true" :model="userData" :rules="rules" class="demo-form-inline">
+                    <el-form :inline="true" ref="comment" :model="form.userData" :rules="rules" class="demo-form-inline">
                         <el-form-item>
-                            <el-upload
-                                class="avatar-uploader"
-                                :action="$uploadUrl"
-                                name="file"
-                                :show-file-list="false"
-                                :on-error="handleAvatarError"
-                                :on-success="handleAvatarSuccess"
-                                :before-upload="beforeAvatarUpload">
-                                <img v-if="userData.commentUserImg" :src="userData.commentUserImg" class="avatar">
-                                <i v-else class="iconfont icon-wode avatar-uploader-icon"></i>
-                            </el-upload>
+                            <i class="iconfont icon-wode avatar-uploader-icon"></i>
                         </el-form-item>
                         <el-form-item label="昵称" prop="commentUserName">
-                            <el-input v-model="userData.commentUserName" placeholder="用户昵称">
+                            <el-input v-model="form.userData.commentUserName" placeholder="用户昵称">
                                 <i slot="suffix" class="el-input__icon el-icon-edit"></i>
                             </el-input>
                         </el-form-item>
                         <el-form-item label="邮箱" prop="commentUserEmail">
-                            <el-input v-model="userData.commentUserEmail" placeholder="邮箱">
+                            <el-input v-model="form.userData.commentUserEmail" placeholder="邮箱">
                                 <i slot="suffix" class="el-input__icon el-icon-edit"></i>
                             </el-input>
                         </el-form-item> 
                     </el-form>
-                </no-ssr>
                 <div class="fireWorkForm">
-                    <textarea type="text" maxlength="1000" class="comment-content" placeholder="~~ 好嗨哦, 感觉人生已经到达了高潮！"></textarea>
+                    <textarea type="text" v-model="form.commentContent" maxlength="1000" class="comment-content" placeholder="~~ 好嗨哦, 感觉人生已经到达了高潮！"></textarea>
                 </div>
                 <div class="btn-wrap">
-                    <no-ssr>
-                        <el-button type="primary" >评论</el-button>
-                    </no-ssr>
+                    <el-button type="primary" @click="addCommentBtn('comment')">评论</el-button>
                 </div>
            </div>
-           <div class="comment-list">
+           <div class="comment-list" v-show="total>0">
                <h3 class="list-header">
                    <span class="tip">
                         留言总数&nbsp;&nbsp;|&nbsp;&nbsp;
@@ -67,15 +53,41 @@
                             {{item.commentContent}}
                         </p>
                         <div class="replay-wrap">
-                            <span class="replay" @click="item.addData.isShowDialog = true">
+                            <span class="replay" @click="commentReplayBtn(item)">
                                 回复
                             </span>
-                            <span class="praise">
-                                <i id='icon-zhankai' class="iconfont icon-dianzan"></i> {{item.commentPraise}}
+                            <span class="praise" @click="addCommentPraise(item)">
+                                <i class="iconfont icon-dianzan"></i> {{item.commentPraise}}
                             </span>
                         </div>
-                        <ul class="replay-list" v-if="item.replayList.length>0">
-                            <li class="replay-item" v-for="(_item,index) in item.replayList" :key="index">
+                        <div class="replay-dialog-wrap"  v-show="item.addData.isShowDialog">
+                            <div class="cancel-repaly">
+                                <el-button type="primary" @click="item.addData.isShowDialog = false">取消评论</el-button>
+                            </div>
+                            <el-form :inline="true" :ref="'commentReplay'+index" :model="item.addData" :rules="rules" class="demo-form-inline">
+                                <el-form-item>
+                                    <i class="iconfont icon-wode avatar-uploader-icon"></i>
+                                </el-form-item>
+                                <el-form-item label="昵称" prop="commentUserName">
+                                    <el-input v-model="item.addData.commentUserName" placeholder="用户昵称">
+                                        <i slot="suffix" class="el-input__icon el-icon-edit"></i>
+                                    </el-input>
+                                </el-form-item>
+                                <el-form-item label="邮箱" prop="commentUserEmail">
+                                    <el-input v-model="item.addData.commentUserEmail" placeholder="邮箱">
+                                        <i slot="suffix" class="el-input__icon el-icon-edit"></i>
+                                    </el-input>
+                                </el-form-item> 
+                            </el-form>
+                            <div class="fireWorkForm">
+                                <textarea type="text" v-model="item.addData.commentContent" maxlength="1000" class="comment-content" placeholder="~~ 好嗨哦, 感觉人生已经到达了高潮！"></textarea>
+                            </div>
+                            <div class="btn-wrap">
+                                <el-button type="primary" @click="addReplayBtn('commentReplay'+index, item)">评论</el-button>
+                            </div>
+                        </div>
+                        <ul class="replay-list" v-show="item.replayList.length>0">
+                            <li class="replay-item" v-for="(_item,_index) in item.replayList" :key="_index">
                                 <figure class="left">
                                     <img :src="_item.userData.commentUserImg? _item.userData.commentUserImg: DefaultHead" alt="header-logo">
                                 </figure>
@@ -88,112 +100,52 @@
                                         {{_item.replayContent}}
                                     </p>
                                     <div class="replay-wrap">
-                                        <span class="replay" @click="_item.addData.isShowDialog = true">
+                                        <span class="replay" @click="replayBtn(_item)">
                                             回复
                                         </span>
-                                        <span class="praise">
-                                            <i id='icon-zhankai' class="iconfont icon-dianzan"></i> {{_item.repalyPraise}}
+                                        <span class="praise" @click="addReplayPraise(_item)">
+                                            <i class="iconfont icon-dianzan"></i> {{_item.repalyPraise}}
                                         </span>
                                     </div>
-                                    <div class="replay-dialog-wrap" v-if="_item.addData.isShowDialog">
+                                    <div class="replay-dialog-wrap" v-show="_item.addData.isShowDialog">
                                         <div class="cancel-repaly">
-                                            <no-ssr>
                                             <el-button type="primary" @click="_item.addData.isShowDialog = false">取消评论</el-button>
-                                            </no-ssr>
                                         </div>
-                                        <no-ssr>
-                                            <el-form :inline="true" :model="userData" :rules="rules" class="demo-form-inline">
-                                                <el-form-item>
-                                                    <el-upload
-                                                        class="avatar-uploader"
-                                                        :action="$uploadUrl"
-                                                        name="file"
-                                                        :show-file-list="false"
-                                                        :on-error="handleAvatarError"
-                                                        :on-success="handleAvatarSuccess"
-                                                        :before-upload="beforeAvatarUpload">
-                                                        <img v-if="userData.commentUserImg" :src="userData.commentUserImg" class="avatar">
-                                                        <i v-else class="iconfont icon-wode avatar-uploader-icon"></i>
-                                                    </el-upload>
-                                                </el-form-item>
-                                                <el-form-item label="昵称" prop="commentUserName">
-                                                    <el-input style="width: 175px;" v-model="userData.commentUserName" placeholder="用户昵称">
-                                                        <i slot="suffix" class="el-input__icon el-icon-edit"></i>
-                                                    </el-input>
-                                                </el-form-item>
-                                                <el-form-item label="邮箱" prop="commentUserEmail">
-                                                    <el-input style="width: 175px;" v-model="userData.commentUserEmail" placeholder="邮箱">
-                                                        <i slot="suffix" class="el-input__icon el-icon-edit"></i>
-                                                    </el-input>
-                                                </el-form-item> 
-                                            </el-form>
-                                        </no-ssr>
+                                        <el-form :inline="true" :ref="'replay'+_index+_item.replayId" :model="_item.addData" :rules="rules" class="demo-form-inline">
+                                            <el-form-item>
+                                                <i class="iconfont icon-wode avatar-uploader-icon"></i>
+                                            </el-form-item>
+                                            <el-form-item label="昵称" prop="commentUserName">
+                                                <el-input style="width: 175px;" v-model="_item.addData.commentUserName" placeholder="用户昵称">
+                                                    <i slot="suffix" class="el-input__icon el-icon-edit"></i>
+                                                </el-input>
+                                            </el-form-item>
+                                            <el-form-item label="邮箱" prop="commentUserEmail">
+                                                <el-input style="width: 175px;" v-model="_item.addData.commentUserEmail" placeholder="邮箱">
+                                                    <i slot="suffix" class="el-input__icon el-icon-edit"></i>
+                                                </el-input>
+                                            </el-form-item> 
+                                        </el-form>
                                         <div class="fireWorkForm">
-                                            <textarea type="text" maxlength="1000" class="comment-content" placeholder="~~ 好嗨哦, 感觉人生已经到达了高潮！"></textarea>
+                                            <textarea type="text" v-model="_item.addData.commentContent" maxlength="1000" class="comment-content" placeholder="~~ 好嗨哦, 感觉人生已经到达了高潮！"></textarea>
                                         </div>
                                         <div class="btn-wrap">
-                                            <no-ssr>
-                                                <el-button type="primary" >评论</el-button>
-                                            </no-ssr>
+                                            <el-button type="primary" @click="addReplay2Btn('replay'+_index+_item.replayId, _item)">评论</el-button>
                                         </div>
                                     </div>
                                 </div>
                             </li>
                         </ul>
-                        <div class="replay-dialog-wrap" v-if="item.addData.isShowDialog">
-                            <div class="cancel-repaly">
-                                <no-ssr>
-                                <el-button type="primary" @click="item.addData.isShowDialog = false">取消评论</el-button>
-                                </no-ssr>
-                            </div>
-                             <no-ssr>
-                                <el-form :inline="true" :model="item.addData" :rules="rules" class="demo-form-inline">
-                                    <el-form-item>
-                                        <el-upload
-                                            class="avatar-uploader"
-                                            :action="$uploadUrl"
-                                            name="file"
-                                            :show-file-list="false"
-                                            :on-error="handleAvatarError"
-                                            :on-success="handleAvatarSuccess"
-                                            :before-upload="beforeAvatarUpload">
-                                            <img v-if="item.addData.commentUserImg" :src="item.addData.commentUserImg" class="avatar">
-                                            <i v-else class="iconfont icon-wode avatar-uploader-icon"></i>
-                                        </el-upload>
-                                    </el-form-item>
-                                    <el-form-item label="昵称" prop="commentUserName">
-                                        <el-input v-model="item.addData.commentUserName" placeholder="用户昵称">
-                                            <i slot="suffix" class="el-input__icon el-icon-edit"></i>
-                                        </el-input>
-                                    </el-form-item>
-                                    <el-form-item label="邮箱" prop="commentUserEmail">
-                                        <el-input v-model="item.addData.commentUserEmail" placeholder="邮箱">
-                                            <i slot="suffix" class="el-input__icon el-icon-edit"></i>
-                                        </el-input>
-                                    </el-form-item> 
-                                </el-form>
-                            </no-ssr>
-                            <div class="fireWorkForm">
-                                <textarea type="text" v-model="item.addData.commentContent" maxlength="1000" class="comment-content" placeholder="~~ 好嗨哦, 感觉人生已经到达了高潮！"></textarea>
-                            </div>
-                            <div class="btn-wrap">
-                                <no-ssr>
-                                    <el-button type="primary" >评论</el-button>
-                                </no-ssr>
-                            </div>
-                        </div>
                    </div>
                </div>
            </div>
-           <div class="pagenation-wrap">
-               <no-ssr>
-                    <el-pagination
-                        @current-change="handleCurrentChange"
-                        :page-size="pageForm.pageSize"
-                        layout="total, prev, pager, next, jumper"
-                        :total="total">
-                    </el-pagination>
-               </no-ssr>
+           <div class="pagenation-wrap" v-show="total>0">
+                <el-pagination
+                    @current-change="handleCurrentChange"
+                    :page-size="pageForm.pageSize"
+                    layout="total, prev, pager, next, jumper"
+                    :total="total">
+                </el-pagination>
            </div>
        </main>
     </section>
@@ -203,8 +155,10 @@
 import DefaultHead from '~/assets/img/comment/default-head.png'
 import { 
     ApiGetCommentList,
-    ApiAddBlogHot,
-    ApiAddBlogLikes
+    ApiAddComment,
+    ApiAddReplay,
+    ApiAddReplayPraise,
+    ApiAddCommentPraise
 } from '~/plugins/server/comment'
 
 export default {
@@ -223,17 +177,21 @@ export default {
     },
     data() {
         return {
-            total: 1000,
+            total: 0,
             DefaultHead: DefaultHead,
             isReplay: false,
             pageForm: {
               pageSize: 15,
               pageNumber: 1  
             },
-            userData: {
-                commentUserEmail: '',
-                commentUserName: '',
-                commentUserImg: ''
+            form: {
+                commentContent:'',
+                commentType: '2',
+                userData: {
+                    commentUserEmail: '',
+                    commentUserName: '',
+                    commentUserImg: ''
+                },
             },
             commentList: [],
             rules: {
@@ -366,80 +324,176 @@ export default {
             }) 
         },
         handleCurrentChange(val) {
-            console.log(`当前页: ${val}`);
+            this.pageForm.pageNumber = val
+            this.getCommentList(this.pageForm)
         },
         handleAvatarError(err, file, fileList) {
             console.log('---> err', err)
         },
-        handleAvatarSuccess(res, file) {
-            if(res.code=== 200){
-                this.userData.commentUserImg = res.data.url
-            }
+        addCommentPraise(commentDetail) {
+            let id = commentDetail.id
+            ApiAddCommentPraise({id}).then(res => {
+                if(res.code == 200){
+                    this.getCommentList(this.pageForm)
+                }
+            })
         },
-        beforeAvatarUpload(file) {
-            const isJPG = file.type === 'image/jpeg' || 'image/png';
-            const isLt2M = file.size / 1024 / 1024 < 2;
-            if (!isJPG) {
-            this.$message.error('上传头像图片只能是 JPG 格式!');
-            }
-            if (!isLt2M) {
-            this.$message.error('上传图片大小不能超过 2MB!');
-            }
-            return isJPG && isLt2M;
+        addReplayPraise(commentDetail) {
+            let replayId = commentDetail.replayId
+            ApiAddReplayPraise({replayId}).then(res => {
+                if(res.code == 200){
+                    this.getCommentList(this.pageForm)
+                }
+            })
+        },
+        commentReplayBtn(commentDetail){
+            if(commentDetail.addData.isShowDialog) return
+            commentDetail.addData.isShowDialog = true
+            let _placeholder = `回复 @${commentDetail.userData.commentUserName}:`
+            commentDetail.addData.commentContent = _placeholder
+        },
+        replayBtn(commentDetail){
+            if(commentDetail.addData.isShowDialog) return
+            commentDetail.addData.isShowDialog = true
+            let _placeholder = `回复 @${commentDetail.userData.commentUserName}:`
+            commentDetail.addData.commentContent = _placeholder
         },
         getCommentList(params) {
             let _params = Object.assign(params, {commentType: '2'})
             ApiGetCommentList(_params).then(res => {
-                console.log('---> res')
                 if(res.code == 200) {
                     this.total = res.data.count
                     let _rows = res.data.rows
                     _rows.forEach(item => {
                         item.addData = {
-                            isShowDialog: false
+                            isShowDialog: false,
+                            commentContent: ''
                         }
                         item.replayList.forEach(_item => {
                             _item.addData = {
-                                isShowDialog: false
+                                isShowDialog: false,
+                                commentContent: ''
                             }
                         })
                         
                     })
-                
                     this.commentList = res.data.rows
-                    console.log('----> this.commentList', this.commentList)
                 }
             })
+        },
+        addComment(params, formName){
+            ApiAddComment(params).then(res => {
+                if(res.code == 200) {
+                    this.pageForm.pageNumber = 1
+                    this.$refs[formName].resetFields();
+                    this.form = {
+                        commentContent:'',
+                        commentType: '2',
+                        userData: {
+                            commentUserEmail: '',
+                            commentUserName: '',
+                            commentUserImg: ''
+                        },
+                    },
+                    this.getCommentList(this.pageForm)
+                }
+            })
+        },
+        addReplay(params){
+            ApiAddReplay(params).then(res => {
+                if(res.code == 200) {
+                    this.getCommentList(this.pageForm)
+                }
+            })
+        },
+        addReplayBtn(formName, detail) {
+            let _detail = this.$deepCopy(detail)
+            this.$refs[formName][0].validate((valid) => {
+                if(valid) {
+                    let _commentContent = _detail.addData.commentContent
+                    if(_commentContent.indexOf('回复 @').indexOf !== -1){
+                        let index = _commentContent.indexOf(':')
+                        let length = _commentContent.length
+                        _detail.addData.commentContent = _commentContent.substring(index+1, length)
+                    }
+                     if(!_detail.addData.commentContent){
+                        this.$message({
+                            message: '小主,不能说‘空’话啊！',
+                            center: true
+                        });
+                     }else{
+                        this.$refs[formName][0].resetFields();
+                        let params = {
+                                repalyUserId: _detail.userData.commentUserId,
+                                replayContent:  _detail.addData.commentContent,
+                                comment_id: _detail.id,
+                                userData: {
+                                    commentUserEmail: _detail.addData.commentUserEmail,
+                                    commentUserName: _detail.addData.commentUserName,
+                                    commentUserImg: this.$randdomHeader()
+                                }
+                        }
+                        this.addReplay(params)
+                     }
+                 }
+            })
+        },
+        addReplay2Btn(formName, detail) {
+            let _detail = this.$deepCopy(detail)
+            this.$refs[formName][0].validate((valid) => {
+                if(valid) {
+                    let _commentContent = _detail.addData.commentContent
+                    if(_commentContent.indexOf('回复 @').indexOf !== -1){
+                        let index = _commentContent.indexOf(':')
+                        let length = _commentContent.length
+                        _detail.addData.commentContent = _commentContent.substring(index+1, length)
+                    }
+                     if(!_detail.addData.commentContent){
+                        this.$message({
+                            message: '小主,不能说‘空’话啊！',
+                            center: true
+                        });
+                     }else{
+                        this.$refs[formName][0].resetFields();
+                        let params = {
+                                repalyUserId: _detail.userData.commentUserId,
+                                replayContent:  _detail.addData.commentContent,
+                                comment_id: _detail.comment_id,
+                                userData: {
+                                    commentUserEmail: _detail.addData.commentUserEmail,
+                                    commentUserName: _detail.addData.commentUserName,
+                                    commentUserImg: this.$randdomHeader()
+                                }
+                        }
+                        this.addReplay(params)
+                     }
+                 }
+            })
+        },
+        addCommentBtn(formName) {
+             this.$refs[formName].validate((valid) => {
+                 if(valid) {
+                     if(!this.form.commentContent){
+                        this.$message({
+                            message: '小主,不能说‘空’话啊！',
+                            center: true
+                        });
+                     }else{
+                        this.form.userData.commentUserImg =  this.$randdomHeader()
+                        this.addComment(this.form, formName)
+                     }
+                 }
+             })
         }
     }
 }
 </script>
 <style>
-    .avatar-uploader .el-upload {
-        border: 1px dashed #d9d9d9;
-        border-radius: 100%;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-        width: 60px;
-        height: 60px;
-    }
-    .avatar-uploader .el-upload:hover {
-        border-color:orange;
-    }
     .avatar-uploader-icon {
         font-size: 38px;
         color: #8c939d;
         line-height: 60px;
         text-align: center;
-    }
-    .avatar {
-        margin: 5px;
-        width: 50px;
-        height: 50px;
-        display: block;
-        border-radius: 100%;
-         
     }
     .comment-wrap .el-form--inline .el-form-item{
         vertical-align: middle;

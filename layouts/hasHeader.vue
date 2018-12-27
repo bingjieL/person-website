@@ -26,7 +26,7 @@ export default {
 
 <style>
     main{
-        min-height: 100vh;
+        min-height: 50vh;
     }
 </style>
 
