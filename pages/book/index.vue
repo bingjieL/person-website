@@ -1,14 +1,42 @@
 <template>
-    <section class="blog-wrap">
+    <section class="book-wrap">
        <div class="banner">
            <div class="img animated pulse slow">
            </div>
            <h3>Book</h3>
        </div>
+       <main class="book-main">
+            <h3 class="book-title">
+                <span class="icon"><i class="iconfont icon-shu"></i></span>
+               <span class="content">书单推荐</span> 
+            </h3>
+            <div class="book-list">
+                <article class="list-item" v-for="(item, index) in bookList" :key="index">
+                    <div class="item-wrap">
+                        <figure class="left">
+                            <img :src="item.bookPic" alt="">
+                        </figure>
+                        <div class="right">
+                            <h3 class="name">{{item.bookTitle}}</h3>
+                            <h3 class="auth">作者: {{item.bookAuthor}}</h3>
+                            <p class="des">{{item.bookDes}}</p>
+                        </div>
+                    </div>
+                    <div class="download-wrap">
+                        <a target="_blank" :href="item.bookpdfUrl == '无'?'javaScript:;':item.bookpdfUrl " data-value="PDF格式下载"><i class="iconfont icon-pdf"></i>PDF</a>
+                        <a target="_blank" :href="item.bookdlUrl == '无'?'javaScript:;':item.bookdlUrl " data-value="kindle格式下载"><i class="iconfont icon-kindle"></i>KDL</a>
+                    </div>
+                </article>
+            </div>
+       </main>
     </section>
 </template>
 
 <script>
+import { 
+    ApiGetBook
+} from '~/plugins/server/book'
+
 export default {
     layout: 'hasHeader',
     scrollToTop: true,
@@ -23,51 +51,27 @@ export default {
             { property: 'og:description', content: 'Book Page'}
         ]
     },
+    data() {
+        return {
+            bookList: []
+        }
+    },
+    mounted() {
+      this.getBookList()
+    },
+    methods: {
+       getBookList() {
+           ApiGetBook({}).then(res => {
+               if(res.code == 200 ) {
+                   this.bookList = res.data.rows
+               }
+           })
+       }
+    }
 
 }
 </script>
 
 <style scoped lang="scss">
-.blog-wrap{
-    .banner{
-        width: 100%;
-        height: 65vh;
-        overflow: hidden;
-        position: relative;
-        text-align: center;
-        .img {
-            width: 100%;
-            height: 65vh;
-            background: url("~/assets/img/banner/writing.jpg") center no-repeat;
-            background-size: cover; 
-            transition: all 0.5s ease;
-        }
-        h3{
-            display: inline-block;
-            padding: 20px;
-            font-size:  50px;
-            font-weight: 500;
-            text-align: center;
-            color: linear-gradient(270deg,#c4987a 33%,#ffd5bf 73%);
-            position: absolute;
-            top: 30vh;
-            transition: all 0.5s ease;
-            background-image:  linear-gradient(270deg,#c4987a 33%,#ffd5bf 73%);
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            transform: translateX(-50%)
-        }
-        &::after{
-            content: '';
-            width: 150%;
-            position: absolute;
-            border-radius: 100%;
-            left: -25%;
-            background: #fff;
-            height: 100px;
-            bottom: -20px;
-        }
-    }
-    
-}
+    @import '~/assets/css/book.scss';
 </style>

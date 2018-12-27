@@ -63,7 +63,7 @@
                     <div class="noticeIcon">
                         <i class="iconfont icon-guangbo"></i>
                     </div>
-                    <div class="noticeContent animated bounceInRight infinite slower">
+                    <div class="noticeContent animated slideInUp infinite slower">
                         Jay.Blog 正式上线咯！ ~~~~ (*^▽^*) ~~~~  ！！！
                     </div>
                 </div>
