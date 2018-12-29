@@ -112,7 +112,7 @@
                                             删除
                                         </span>
                                         <span class="delete"
-                                            v-if="userData.commentUserEmail == item.userData.commentUserEmail && userData.commentUserEmail != 'admin@admin.com'" 
+                                            v-if="userData.commentUserEmail == _item.userData.commentUserEmail && userData.commentUserEmail != 'admin@admin.com'" 
                                             @click="deleteReplayBtn(_item)">
                                             删除
                                         </span>

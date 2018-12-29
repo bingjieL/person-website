@@ -159,7 +159,6 @@ export default {
                 if(windowHeight + scrollTop + 60 > Height){
                     if(this.count> this.blogList) {
                         this.form.pageNumber = this.form.pageNumber + 1
-                        console.log('----> 分页',  this.form)
                         if(this.form.blogTypeId){
                             this.searchByType(this.form.blogTypeId)
                         }else{
