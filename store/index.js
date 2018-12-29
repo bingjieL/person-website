@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import testStore from './modules/testStore'
+import userBasic from './modules/userBasic'
 
 Vue.use(Vuex);
 export default ()=>{
     return new Vuex.Store({
         modules:{
-            testStore
+            userBasic
         },
         strict: false
     })

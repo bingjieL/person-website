@@ -35,27 +35,27 @@
            </div>
            <div class="blog-comment-wrap" >
                 <div class="content-basic">
-                            <el-form :inline="true" ref="comment" :model="form.userData" :rules="rules" class="demo-form-inline">
-                                <el-form-item>
-                                    <i class="iconfont icon-wode avatar-uploader-icon"></i>
-                                </el-form-item>
-                                <el-form-item label="昵称" prop="commentUserName">
-                                    <el-input v-model="form.userData.commentUserName" placeholder="用户昵称">
-                                        <i slot="suffix" class="el-input__icon el-icon-edit"></i>
-                                    </el-input>
-                                </el-form-item>
-                                <el-form-item label="邮箱" prop="commentUserEmail">
-                                    <el-input v-model="form.userData.commentUserEmail" placeholder="邮箱">
-                                        <i slot="suffix" class="el-input__icon el-icon-edit"></i>
-                                    </el-input>
-                                </el-form-item> 
-                            </el-form>
-                        <div class="fireWorkForm">
-                            <textarea type="text" v-model="form.commentContent" maxlength="1000" class="comment-content" placeholder="~~ 好嗨哦, 感觉人生已经到达了高潮！"></textarea>
-                        </div>
-                        <div class="btn-wrap">
-                            <el-button type="primary" @click="addCommentBtn('comment')">评论</el-button>
-                        </div>
+                    <el-form v-show="!userData.commentUserEmail" :inline="true" ref="comment" :model="form.userData" :rules="rules" class="demo-form-inline">
+                        <el-form-item>
+                            <i class="iconfont icon-wode avatar-uploader-icon"></i>
+                        </el-form-item>
+                        <el-form-item label="昵称" prop="commentUserName">
+                            <el-input v-model="form.userData.commentUserName" placeholder="用户昵称">
+                                <i slot="suffix" class="el-input__icon el-icon-edit"></i>
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item label="邮箱" prop="commentUserEmail">
+                            <el-input v-model="form.userData.commentUserEmail" placeholder="邮箱">
+                                <i slot="suffix" class="el-input__icon el-icon-edit"></i>
+                            </el-input>
+                        </el-form-item> 
+                    </el-form>
+                    <div class="fireWorkForm">
+                        <textarea type="text" v-model="form.commentContent" maxlength="1000" class="comment-content" placeholder="~~ 好嗨哦, 感觉人生已经到达了高潮！"></textarea>
+                    </div>
+                    <div class="btn-wrap">
+                        <el-button type="primary" @click="addCommentBtn('comment')">评论</el-button>
+                    </div>
                 </div>
                 <div class="comment-list" v-show="total>0">
                     <h3 class="list-header">
@@ -68,12 +68,12 @@
                     </h3>
                     <div class="comment-item" v-for="(item, index) in commentList" :key="index">
                         <figure class="left">
-                            <img :src="item.userData.commentUserImg?item.userData.commentUserImg: DefaultHead" alt="header-logo">
+                           <img :src="item.userData?item.userData.commentUserImg: DefaultHead" alt="header-logo">
                         </figure>
                         <div class="right">
                                 <h3 class="name">
                                     <span>
-                                        {{item.user_id? item.userData.commentUserName: ''}}
+                                        {{item.userData? item.userData.commentUserName: ''}}
                                     </span>
                                 </h3>
                                 <h4 class="date">发布于 {{item.created_time | DateFormat('YYYY-MM-DD HH:mm:ss')}}</h4>
@@ -81,6 +81,14 @@
                                     {{item.commentContent}}
                                 </p>
                                 <div class="replay-wrap">
+                                    <span class="delete" v-if="userData.commentUserEmail == 'admin@admin.com'" @click="deleteCommentBtn(item)">
+                                        删除
+                                    </span>
+                                    <span class="delete"
+                                        v-if="userData.commentUserEmail == item.userData.commentUserEmail && userData.commentUserEmail != 'admin@admin.com'" 
+                                        @click="deleteCommentBtn(item)">
+                                        删除
+                                    </span>
                                     <span class="replay" @click="commentReplayBtn(item)">
                                         回复
                                     </span>
@@ -92,7 +100,7 @@
                                     <div class="cancel-repaly">
                                         <el-button type="primary" @click="item.addData.isShowDialog = false">取消评论</el-button>
                                     </div>
-                                    <el-form :inline="true" :ref="'commentReplay'+index" :model="item.addData" :rules="rules" class="demo-form-inline">
+                                    <el-form v-show="!userData.commentUserEmail" :inline="true" :ref="'commentReplay'+index" :model="item.addData" :rules="rules" class="demo-form-inline">
                                         <el-form-item>
                                             <i class="iconfont icon-wode avatar-uploader-icon"></i>
                                         </el-form-item>
@@ -121,13 +129,21 @@
                                         </figure>
                                         <div class="right">
                                             <h3 class="name">
-                                                <span>{{_item.userData.commentUserName}}</span> 回复 <span>{{_item.repalyUser.commentUserName}}</span>
+                                                 <span>{{_item.userData?_item.userData.commentUserName:''}}</span> 回复 <span>{{_item.repalyUser?_item.repalyUser.commentUserName: ''}}</span>
                                             </h3>
                                             <h4 class="date">发布于 {{_item.created_time | DateFormat('YYYY-MM-DD HH:mm:ss')}}</h4>
                                             <p class="content">
                                                 {{_item.replayContent}}
                                             </p>
                                             <div class="replay-wrap">
+                                                <span class="delete" @click="deleteReplayBtn(_item)" v-if="userData.commentUserEmail == 'admin@admin.com'">
+                                                    删除
+                                                </span>
+                                                <span class="delete"
+                                                    v-if="userData.commentUserEmail == item.userData.commentUserEmail && userData.commentUserEmail != 'admin@admin.com'" 
+                                                    @click="deleteReplayBtn(_item)">
+                                                    删除
+                                                </span>
                                                 <span class="replay" @click="replayBtn(_item)">
                                                     回复
                                                 </span>
@@ -139,7 +155,7 @@
                                                 <div class="cancel-repaly">
                                                     <el-button type="primary" @click="_item.addData.isShowDialog = false">取消评论</el-button>
                                                 </div>
-                                                <el-form :inline="true" :ref="'replay'+_index+_item.replayId" :model="_item.addData" :rules="rules" class="demo-form-inline">
+                                                <el-form v-show="!userData.commentUserEmail" :inline="true" :ref="'replay'+_index+_item.replayId" :model="_item.addData" :rules="rules" class="demo-form-inline">
                                                     <el-form-item>
                                                         <i class="iconfont icon-wode avatar-uploader-icon"></i>
                                                     </el-form-item>
@@ -189,8 +205,11 @@ import {
     ApiAddComment,
     ApiAddReplay,
     ApiAddReplayPraise,
-    ApiAddCommentPraise
+    ApiAddCommentPraise,
+    ApiReplayDelete,
+    ApiCommentDelete
 } from '~/plugins/server/blogDetail'
+import{ mapState, mapMutations} from 'vuex'
 import DefaultHead from '~/assets/img/comment/default-head.png'
 
 export default {
@@ -249,19 +268,31 @@ export default {
                     { min: 3, max: 12, message: '昵称不能少于三个字符且不大于12个字符', trigger: 'blur' }
                 ],
                 commentUserEmail: [
-                     { required: true, type: 'email', message: '小主格式邮箱不正确哦', trigger: 'blur' },
+                     { required: true, type: 'email', message: '小主邮箱格式不正确哦', trigger: 'blur' },
                 ]
                  
             }
         }
+    },
+    computed: {
+        ...mapState({
+            userData: state=> state.userBasic.userData
+        })
     },
     mounted() {
         this.getBlogDetail({blogId: this.bid})
         this.addBlogHot({blogId: this.bid})
         this.fireWorks()
         this.getCommentList(this.pageForm)
+         let userData = localStorage.getItem('userData')
+        let _userData =  userData?JSON.parse(unescape(userData)): {}
+        if(_userData.commentUserEmail){
+            this.SET_USER_BASIC(_userData)
+            this.form.userData = _userData
+        }
     },
     methods: {
+        ...mapMutations(['SET_USER_BASIC', 'CLEAR_USER_BASIC']),
         getBlogDetail(params) {
             ApiGetBlogDetail(params).then(res => {
                 if(res.code == 200) {
@@ -438,12 +469,14 @@ export default {
                     _rows.forEach(item => {
                         item.addData = {
                             isShowDialog: false,
-                            commentContent: ''
+                            commentContent: '',
+                            ...this.userData
                         }
                         item.replayList.forEach(_item => {
                             _item.addData = {
                                 isShowDialog: false,
-                                commentContent: ''
+                                commentContent: '',
+                                ...this.userData
                             }
                         })
                         
@@ -457,16 +490,24 @@ export default {
             ApiAddComment(params).then(res => {
                 if(res.code == 200) {
                     this.pageForm.pageNumber = 1
-                    this.$refs[formName].resetFields();
+                    // this.$refs[formName].resetFields();
                     this.form = {
                         commentContent:'',
                         commentType: '1',
                         userData: {
-                            commentUserEmail: '',
-                            commentUserName: '',
-                            commentUserImg: ''
+                             ...this.userData
                         },
-                    },
+                    }
+                    if(res.data.isSendEmail){
+                        let userData = JSON.stringify(res.data.userData)
+                        localStorage.setItem('userData',escape(userData))
+                        this.SET_USER_BASIC(res.data.userData)
+                        this.$notify({
+                            title: '注册成功',
+                            message: '账号为当前邮箱,密码已通过邮件形式发送到该邮箱',
+                            type: 'success'
+                        });
+                    }
                     this.getCommentList(this.pageForm)
                 }
             })
@@ -475,6 +516,16 @@ export default {
             params.blogId = this.bid
             ApiAddReplay(params).then(res => {
                 if(res.code == 200) {
+                    if(res.data.isSendEmail){
+                        let userData = JSON.stringify(res.data.userData)
+                        localStorage.setItem('userData',escape(userData))
+                        this.SET_USER_BASIC(res.data.userData)
+                        this.$notify({
+                            title: '注册成功',
+                            message: '账号为当前邮箱,密码已通过邮件形式发送到该邮箱',
+                            type: 'success'
+                        });
+                    }
                     this.getCommentList(this.pageForm)
                 }
             })
@@ -557,6 +608,33 @@ export default {
                      }
                  }
              })
+        },
+        apiDeleteComment(params) {
+            ApiCommentDelete(params).then(res => {
+                if(res.code == 200) {
+                    this.getCommentList(this.pageForm)
+                }
+            })
+        },
+         apiDeleteReplay(params) {
+            ApiReplayDelete(params).then(res => {
+                if(res.code == 200) {
+                    this.getCommentList(this.pageForm)
+                }
+            })
+        },
+        deleteCommentBtn(commentDetail) {
+            let id = commentDetail.id
+
+            this.$confirm('点击确认,将删除本条记录').then(res => {
+               this.apiDeleteComment({id})
+            }).catch(cancel => {});
+        },
+        deleteReplayBtn(replay) {
+            let replayId = replay.replayId
+            this.$confirm('点击确认,将删除本条记录').then(res => {
+                this.apiDeleteReplay({replayId})
+            }).catch(cancel => {});
         }
     }
 

@@ -7,7 +7,7 @@
        </div>
        <main class="main-wrap">
            <div class="content-basic">
-                    <el-form :inline="true" ref="comment" :model="form.userData" :rules="rules" class="demo-form-inline">
+                    <el-form v-show="!userData.commentUserEmail" :inline="true" ref="comment" :model="form.userData" :rules="rules" class="demo-form-inline">
                         <el-form-item>
                             <i class="iconfont icon-wode avatar-uploader-icon"></i>
                         </el-form-item>
@@ -40,12 +40,12 @@
                </h3>
                <div class="comment-item" v-for="(item, index) in commentList" :key="index">
                    <figure class="left">
-                       <img :src="item.userData.commentUserImg?item.userData.commentUserImg: DefaultHead" alt="header-logo">
+                       <img :src="item.userData?item.userData.commentUserImg: DefaultHead" alt="header-logo">
                    </figure>
                    <div class="right">
                         <h3 class="name">
                             <span>
-                                {{item.user_id? item.userData.commentUserName: ''}}
+                                {{item.userData? item.userData.commentUserName: ''}}
                             </span>
                         </h3>
                         <h4 class="date">发布于 {{item.created_time | DateFormat('YYYY-MM-DD HH:mm:ss')}}</h4>
@@ -53,6 +53,14 @@
                             {{item.commentContent}}
                         </p>
                         <div class="replay-wrap">
+                            <span class="delete" v-if="userData.commentUserEmail == 'admin@admin.com'" @click="deleteCommentBtn(item)">
+                                删除
+                            </span>
+                            <span class="delete"
+                                v-if="userData.commentUserEmail == item.userData.commentUserEmail && userData.commentUserEmail != 'admin@admin.com'" 
+                                @click="deleteCommentBtn(item)">
+                                删除
+                            </span>
                             <span class="replay" @click="commentReplayBtn(item)">
                                 回复
                             </span>
@@ -64,7 +72,7 @@
                             <div class="cancel-repaly">
                                 <el-button type="primary" @click="item.addData.isShowDialog = false">取消评论</el-button>
                             </div>
-                            <el-form :inline="true" :ref="'commentReplay'+index" :model="item.addData" :rules="rules" class="demo-form-inline">
+                            <el-form v-show="!userData.commentUserEmail" :inline="true" :ref="'commentReplay'+index" :model="item.addData" :rules="rules" class="demo-form-inline">
                                 <el-form-item>
                                     <i class="iconfont icon-wode avatar-uploader-icon"></i>
                                 </el-form-item>
@@ -89,17 +97,25 @@
                         <ul class="replay-list" v-show="item.replayList.length>0">
                             <li class="replay-item" v-for="(_item,_index) in item.replayList" :key="_index">
                                 <figure class="left">
-                                    <img :src="_item.userData.commentUserImg? _item.userData.commentUserImg: DefaultHead" alt="header-logo">
+                                    <img :src="_item.userData? _item.userData.commentUserImg: DefaultHead" alt="header-logo">
                                 </figure>
                                 <div class="right">
                                      <h3 class="name">
-                                        <span>{{_item.userData.commentUserName}}</span> 回复 <span>{{_item.repalyUser.commentUserName}}</span>
+                                        <span>{{_item.userData?_item.userData.commentUserName:''}}</span> 回复 <span>{{_item.repalyUser?_item.repalyUser.commentUserName: ''}}</span>
                                     </h3>
                                     <h4 class="date">发布于 {{_item.created_time | DateFormat('YYYY-MM-DD HH:mm:ss')}}</h4>
                                     <p class="content">
                                         {{_item.replayContent}}
                                     </p>
                                     <div class="replay-wrap">
+                                        <span class="delete" @click="deleteReplayBtn(_item)" v-if="userData.commentUserEmail == 'admin@admin.com'">
+                                            删除
+                                        </span>
+                                        <span class="delete"
+                                            v-if="userData.commentUserEmail == item.userData.commentUserEmail && userData.commentUserEmail != 'admin@admin.com'" 
+                                            @click="deleteReplayBtn(_item)">
+                                            删除
+                                        </span>
                                         <span class="replay" @click="replayBtn(_item)">
                                             回复
                                         </span>
@@ -111,7 +127,7 @@
                                         <div class="cancel-repaly">
                                             <el-button type="primary" @click="_item.addData.isShowDialog = false">取消评论</el-button>
                                         </div>
-                                        <el-form :inline="true" :ref="'replay'+_index+_item.replayId" :model="_item.addData" :rules="rules" class="demo-form-inline">
+                                        <el-form :inline="true" v-show="!userData.commentUserEmail" :ref="'replay'+_index+_item.replayId" :model="_item.addData" :rules="rules" class="demo-form-inline">
                                             <el-form-item>
                                                 <i class="iconfont icon-wode avatar-uploader-icon"></i>
                                             </el-form-item>
@@ -158,8 +174,11 @@ import {
     ApiAddComment,
     ApiAddReplay,
     ApiAddReplayPraise,
-    ApiAddCommentPraise
+    ApiAddCommentPraise,
+    ApiReplayDelete,
+    ApiCommentDelete
 } from '~/plugins/server/comment'
+import{ mapState, mapMutations} from 'vuex'
 
 export default {
     layout: 'hasHeader',
@@ -200,17 +219,29 @@ export default {
                     { min: 3, max: 12, message: '昵称不能少于三个字符且不大于12个字符', trigger: 'blur' }
                 ],
                 commentUserEmail: [
-                     { required: true, type: 'email', message: '小主格式邮箱不正确哦', trigger: 'blur' },
+                     { required: true, type: 'email', message: '小主邮箱格式不正确哦', trigger: 'blur' },
                 ]
                  
             }
         }
     },
+    computed: {
+        ...mapState({
+            userData: state=> state.userBasic.userData
+        })
+    },
     mounted() {
         this.fireWorks()
         this.getCommentList(this.pageForm)
+        let userData = localStorage.getItem('userData')
+        let _userData =  userData?JSON.parse(unescape(userData)): {}
+        if(_userData.commentUserEmail){
+            this.SET_USER_BASIC(_userData)
+            this.form.userData = _userData
+        }
     },
     methods: {
+         ...mapMutations(['SET_USER_BASIC', 'CLEAR_USER_BASIC']),
         fireWorks() {
            function p() {
                 window.requestAnimFrame(p), a = d(0, 360), s.globalCompositeOperation = "destination-out", s.fillStyle =
@@ -367,12 +398,14 @@ export default {
                     _rows.forEach(item => {
                         item.addData = {
                             isShowDialog: false,
-                            commentContent: ''
+                            commentContent: '',
+                            ...this.userData
                         }
                         item.replayList.forEach(_item => {
                             _item.addData = {
                                 isShowDialog: false,
-                                commentContent: ''
+                                commentContent: '',
+                                ...this.userData
                             }
                         })
                         
@@ -385,16 +418,24 @@ export default {
             ApiAddComment(params).then(res => {
                 if(res.code == 200) {
                     this.pageForm.pageNumber = 1
-                    this.$refs[formName].resetFields();
+                    // this.$refs[formName].resetFields();
                     this.form = {
                         commentContent:'',
                         commentType: '2',
                         userData: {
-                            commentUserEmail: '',
-                            commentUserName: '',
-                            commentUserImg: ''
+                            ...this.userData
                         },
-                    },
+                    }
+                    if(res.data.isSendEmail){
+                        let userData = JSON.stringify(res.data.userData)
+                        localStorage.setItem('userData',escape(userData))
+                        this.SET_USER_BASIC(res.data.userData)
+                        this.$notify({
+                            title: '注册成功',
+                            message: '账号为当前邮箱,密码已通过邮件形式发送到该邮箱',
+                            type: 'success'
+                        });
+                    }
                     this.getCommentList(this.pageForm)
                 }
             })
@@ -402,6 +443,16 @@ export default {
         addReplay(params){
             ApiAddReplay(params).then(res => {
                 if(res.code == 200) {
+                    if(res.data.isSendEmail){
+                        let userData = JSON.stringify(res.data.userData)
+                        localStorage.setItem('userData',escape(userData))
+                        this.SET_USER_BASIC(res.data.userData)
+                        this.$notify({
+                            title: '注册成功',
+                            message: '账号为当前邮箱,密码已通过邮件形式发送到该邮箱',
+                            type: 'success'
+                        });
+                    }
                     this.getCommentList(this.pageForm)
                 }
             })
@@ -484,6 +535,33 @@ export default {
                      }
                  }
              })
+        },
+        apiDeleteComment(params) {
+            ApiCommentDelete(params).then(res => {
+                if(res.code == 200) {
+                    this.getCommentList(this.pageForm)
+                }
+            })
+        },
+         apiDeleteReplay(params) {
+            ApiReplayDelete(params).then(res => {
+                if(res.code == 200) {
+                    this.getCommentList(this.pageForm)
+                }
+            })
+        },
+        deleteCommentBtn(commentDetail) {
+            let id = commentDetail.id
+
+            this.$confirm('点击确认,将删除本条记录').then(res => {
+               this.apiDeleteComment({id})
+            }).catch(cancel => {});
+        },
+        deleteReplayBtn(replay) {
+            let replayId = replay.replayId
+            this.$confirm('点击确认,将删除本条记录').then(res => {
+                this.apiDeleteReplay({replayId})
+            }).catch(cancel => {});
         }
     }
 }

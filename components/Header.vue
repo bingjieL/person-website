@@ -50,9 +50,22 @@
             </nav>
             <div class="search-header">
                     <span class="animated search" @click="search"><i class="iconfont icon-search"></i></span>
-                    <a href="http://cms.8bjl.cn" target="_blank" rel="noopener noreferrer">
-                        <span ref='MineIcon' class="animated mine" @mouseover="setHoverClass('MineIcon', 'swing')" @mouseout="rmHoverClass('MineIcon', 'swing')"><i class="iconfont icon-wode"></i></span>
-                    </a>
+                    <template v-if="userData.commentUserEmail">
+                        <span @click="gotoUser(true)" ref='MineIcon' class="animated mine" @mouseover="setHoverClass('MineIcon', 'swing')" @mouseout="rmHoverClass('MineIcon', 'swing')">
+                            <el-dropdown @command="userGoDetail">
+                                <!-- <img src="~/assets/img/min-banner/header-logo.jpg" alt="logo" srcset=""> -->
+                                <img :src="userData.commentUserImg" alt="logo" srcset="">  
+                                <el-dropdown-menu slot="dropdown">
+                                    <el-dropdown-item command="password">修改密码</el-dropdown-item>
+                                    <el-dropdown-item command="basic">修改信息</el-dropdown-item>
+                                    <!-- <el-dropdown-item command="loginOut">退出登录</el-dropdown-item> -->
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </span>
+                    </template>
+                    <template v-else>
+                        <span @click="gotoUser(false)" ref='MineIcon' class="animated mine" @mouseover="setHoverClass('MineIcon', 'swing')" @mouseout="rmHoverClass('MineIcon', 'swing')"><i class="iconfont icon-wode"></i></span>
+                    </template>
             </div>
         </header>
         <div class="search-wrap" id="search-wrap" @keydown.enter="goSearch">
@@ -75,13 +88,26 @@
 </template>
 
 <script>
+import{ mapState, mapMutations} from 'vuex'
+
 export default {
     data() {
         return {
-            searchStr: ''
+            searchStr: '',
         }
     },
+    computed: {
+        ...mapState({
+            userData: state=> state.userBasic.userData
+        })
+    },
     mounted () {
+        let userData = localStorage.getItem('userData')
+        let _userData = userData?JSON.parse(unescape(userData)): {}
+        if(_userData.commentUserEmail) {
+            // this.userData =  _userData 
+            this.SET_USER_BASIC(_userData)
+        }
         this.changeGoToplocation()
         this.changeScrollProgressWidth()
         window.onscroll = () => {
@@ -90,6 +116,32 @@ export default {
         }
     },
     methods: {
+        ...mapMutations(['SET_USER_BASIC', 'CLEAR_USER_BASIC']),
+        gotoUser(isLogin) {
+            if(this.$route.path == '/userDetail' || this.$route.path == '/login' ||  this.$route.path =='/register' ||  this.$route.path =='/changePassword') return
+            if(isLogin) {
+                this.$router.push({path: '/userDetail', query: {redirect: this.$route.fullPath}})
+            }else{
+                this.$router.push({path: '/login', query: {redirect: this.$route.fullPath}})
+            }
+        },
+        userGoDetail(val) {
+            let cover = {
+                password: '/changePassword',
+                basic: '/userDetail'
+            }
+            if(val == 'loginOut') {
+                localStorage.removeItem('userData')
+                this.CLEAR_USER_BASIC()
+            }else{
+                let _redirect =  this.$route.fullPath
+                if(this.$route.path == '/userDetail' || this.$route.path == '/login' ||  this.$route.path =='/register' || this.$route.path =='/changePassword'){
+                    _redirect = this.$route.query.redirect? this.$route.query.redirect :'/homePage'
+                }
+                this.$router.push({path: cover[val], query: {redirect: _redirect}})
+            }
+            
+        },
         setHoverClass(icon, className) {
             this.$domHover(icon ,className)
         },

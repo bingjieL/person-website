@@ -1,0 +1,23 @@
+User-agent: *
+#Default
+Disallow: /
+Disallow: /*.jpg
+Disallow: /*.png
+Disallow: /*.gif
+Disallow: /*.pdf
+Disallow: /*.ico
+Disallow: /*.svg
+Disallow: /*.jpeg
+Disallow: /*.cur
+
+
+#Should be allowed page
+Disallow: /homoPage
+Disallow: /music
+Disallow: /searchPage?*
+Disallow: /comment
+Disallow: /blogDetail/*?*
+Disallow: /blog?*
+Disallow: /book
+Disallow: /about
+Disallow: /upload/*

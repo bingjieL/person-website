@@ -9,12 +9,16 @@ const domHover = {
     methods: {
         $domHover(ref, className) {
             className.split(';').forEach(item => {
-                this.$refs[ref].classList.add(item)
+                if(this.$refs[ref] && this.$refs[ref].classList){
+                    this.$refs[ref].classList.add(item)
+                }
             })
         },
         $domRemoveClass(ref, className) {
             className.split(';').forEach(item => {
-                this.$refs[ref].classList.remove(item)
+                if(this.$refs[ref] && this.$refs[ref].classList){
+                    this.$refs[ref].classList.remove(item)
+                }
             })
         }
     }

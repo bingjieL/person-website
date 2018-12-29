@@ -32,3 +32,11 @@ export const ApiAddReplayPraise= (params) => {
 export const ApiAddCommentPraise= (params) => {
     return request.post(`${hostUrl}/api/comment/commentAddPraise`, params)
 }
+
+export const ApiReplayDelete= (params) => {
+    return request.post(`${hostUrl}/api/comment/replayDelete`, params)
+}
+
+export const ApiCommentDelete= (params) => {
+    return request.post(`${hostUrl}/api/comment/commentDelete`, params)
+}
