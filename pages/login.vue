@@ -104,6 +104,8 @@ export default {
                 this.registerLoading = false
                 if(res.code == 200) {
                     this.showErrMsg = false
+                    let timeStamp = new Date().valueOf()
+                    res.data.timeStamp = timeStamp
                     let userData = JSON.stringify(res.data)
                     localStorage.setItem('userData',escape(userData))
                     let { redirect='/homePage'} = this.$route.query

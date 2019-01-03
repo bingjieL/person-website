@@ -499,6 +499,8 @@ export default {
                         },
                     }
                     if(res.data.isSendEmail){
+                        let timeStamp = new Date().valueOf()
+                        res.data.userData.timeStamp = timeStamp
                         let userData = JSON.stringify(res.data.userData)
                         localStorage.setItem('userData',escape(userData))
                         this.SET_USER_BASIC(res.data.userData)
@@ -517,6 +519,8 @@ export default {
             ApiAddReplay(params).then(res => {
                 if(res.code == 200) {
                     if(res.data.isSendEmail){
+                        let timeStamp = new Date().valueOf()
+                        res.data.userData.timeStamp = timeStamp
                         let userData = JSON.stringify(res.data.userData)
                         localStorage.setItem('userData',escape(userData))
                         this.SET_USER_BASIC(res.data.userData)
