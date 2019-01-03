@@ -142,17 +142,21 @@ export default {
             this.getBlog(this.form)
         }
         this.changeAsideShow()
+        window.addEventListener('scroll', this.changeAsideShow)
+        window.addEventListener('resize', this.changeAsideShow)
+
     },
     destroyed() {
         window.removeEventListener('scroll', this.changeAsideShow)
+        window.removeEventListener('resize', this.changeAsideShow)
     },
     methods: {
         changeAsideShow() {
             let showAsideHeight =$('#blog-main').offset().top
-            $(window).resize(()=> {
-                showAsideHeight = $('#blog-main').offset().top
-            })
-            $(window).scroll(()=>{ 
+            // $(window).resize(()=> {
+                // showAsideHeight = $('#blog-main').offset().top
+            // })
+            // $(window).scroll(()=>{ 
                 let scrollTop = $(window).scrollTop()
                 let Height = $(document).height()
                 let windowHeight = $(window).height()
@@ -173,7 +177,7 @@ export default {
                      $('#fixed-tag').hide();
                     $('#tags-aside').show()
                 }
-            });
+            // });
         },
         goBlogDetail(blogDetail) {
             let _title = blogDetail.blogTitle.replace(/\n/g, '_')

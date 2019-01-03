@@ -676,6 +676,7 @@ export default {
     .main-content p {
         color: #404040;
         margin: 10px 0 0 15px;
+        line-height: 28px;
     }
     .main-content >h2::after {
         content: '#';
