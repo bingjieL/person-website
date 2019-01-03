@@ -163,6 +163,7 @@ export default {
                 if(windowHeight + scrollTop + 60 > Height){
                     if(this.count> this.blogList) {
                         this.form.pageNumber = this.form.pageNumber + 1
+                        if(this.isloading) return 
                         if(this.form.blogTypeId){
                             this.searchByType(this.form.blogTypeId)
                         }else{
@@ -171,7 +172,7 @@ export default {
                     }
                 }
                 if(scrollTop > showAsideHeight + 50){
-                    $('#fixed-tag').fadeIn();
+                    $('#fixed-tag').show();
                     $('#tags-aside').hide()
                 }else {
                      $('#fixed-tag').hide();
