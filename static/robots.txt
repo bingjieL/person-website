@@ -12,6 +12,10 @@ Disallow: /*.cur
 
 
 #Should be allowed page
+Disallow: /index
+Disallow: /login
+Disallow: /register
+Disallow: /userDetail
 Disallow: /homoPage
 Disallow: /music
 Disallow: /searchPage?*
