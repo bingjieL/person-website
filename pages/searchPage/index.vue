@@ -110,7 +110,8 @@ export default {
         goBlogDetail(blogDetail) {
             let _title = blogDetail.blogTitle.replace(/\s/g, '_')
             let blogId = blogDetail.blogId
-            this.$router.push({path: `/blogDetail/${_title}`, query: { bid: blogId}})
+            let url = this.$router.resolve({path: `/blogDetail/${_title}`, query: { bid: blogId}})
+            window.open(url.href, '_blank')
         }
     }  
 

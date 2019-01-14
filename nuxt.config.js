@@ -72,6 +72,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
+    extractCSS: {allChunks:true},
     /*
     ** Run ESLint on save
     */

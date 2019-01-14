@@ -81,7 +81,7 @@
                    </div>
                    <ul class="tags-list">
                         <li class="tag-item" @click="searchGetAll()">All</li>
-                        <li class="tag-item" v-for="(item, index) in blogTypeList" :key="index" @click="searchByType(item.blogTypeId)">{{item.blogTypeTitle}}</li>
+                        <li class="tag-item" v-for="(item, index) in blogTypeList" :key="index" @click="searchByTypeBtn(item.blogTypeId)">{{item.blogTypeTitle}}</li>
                    </ul>
                </div>
            </aside>
@@ -92,7 +92,7 @@
                 </div>
                 <ul class="tags-list">
                     <li class="tag-item" @click="searchGetAll()">All</li>
-                    <li class="tag-item" v-for="(item, index) in blogTypeList" :key="index" @click="searchByType(item.blogTypeId)">{{item.blogTypeTitle}}</li>
+                    <li class="tag-item" v-for="(item, index) in blogTypeList" :key="index" @click="searchByTypeBtn(item.blogTypeId)">{{item.blogTypeTitle}}</li>
                 </ul>
             </div>
        </main>
@@ -126,7 +126,7 @@ export default {
             count: 0,
             showBottomTip: false,
             form: {
-                pageSize: 10,
+                pageSize: 5,
                 pageNumber: 1,
                 blogTypeId: null
             }
@@ -153,37 +153,34 @@ export default {
     methods: {
         changeAsideShow() {
             let showAsideHeight =$('#blog-main').offset().top
-            // $(window).resize(()=> {
-                // showAsideHeight = $('#blog-main').offset().top
-            // })
-            // $(window).scroll(()=>{ 
-                let scrollTop = $(window).scrollTop()
-                let Height = $(document).height()
-                let windowHeight = $(window).height()
-                if(windowHeight + scrollTop + 60 > Height){
-                    if(this.count> this.blogList) {
-                        this.form.pageNumber = this.form.pageNumber + 1
-                        if(this.isloading) return 
-                        if(this.form.blogTypeId){
-                            this.searchByType(this.form.blogTypeId)
-                        }else{
-                            this.getBlog(this.form)
-                        }
+            let scrollTop = $(window).scrollTop()
+            let Height = $(document).height()
+            let windowHeight = $(window).height()
+            if(windowHeight + scrollTop + 20 > Height){
+                if(this.count> this.blogList.length) {
+                    if(this.isloading) return 
+                    this.isloading = true
+                    this.form.pageNumber = this.form.pageNumber + 1
+                    if(this.form.blogTypeId){
+                        this.searchByType(this.form.blogTypeId)
+                    }else{
+                        this.getBlog(this.form)
                     }
                 }
-                if(scrollTop > showAsideHeight + 50){
-                    $('#fixed-tag').show();
-                    $('#tags-aside').hide()
-                }else {
-                     $('#fixed-tag').hide();
-                    $('#tags-aside').show()
-                }
-            // });
+            }
+            if(scrollTop > showAsideHeight + 50){
+                $('#fixed-tag').show();
+                $('#tags-aside').hide()
+            }else {
+                    $('#fixed-tag').hide();
+                $('#tags-aside').show()
+            }
         },
         goBlogDetail(blogDetail) {
             let _title = blogDetail.blogTitle.replace(/\n/g, '_')
             let blogId = blogDetail.blogId
-            this.$router.push({path: `/blogDetail/${_title}`, query: { bid: blogId}})
+            let url = this.$router.resolve({path: `/blogDetail/${_title}`, query: { bid: blogId}})
+            window.open(url.href, '_blank')
         },
         getBlogType() {
             ApiGetBlogType({}).then(res => {
@@ -194,30 +191,34 @@ export default {
         },
         getBlog(params) {
             ApiGetBlog(params).then(res => {
-                this.isloading = false
                 if(res.code == 200) {
                     this.count = res.data.count
                     let _blogList  = res.data.rows
-                    this.blogList = _blogList.concat(this.blogList)
-                    if(this.blogList.length == res.data.count) {
+                    this.blogList = this.blogList.concat(_blogList)
+                    if(this.blogList.length == res.data.count && res.data.count!==0) {
                         this.showBottomTip = true
                     }
                 }
-                $('#blog-list-wrap').addClass('animated fadeInUp slow');
+                if(this.form.pageNumber == 1 ){
+                    $('#blog-list-wrap').addClass('animated fadeInUp slow');
+                }
+                this.isloading = false
             })
         },
         getBlogByType(params) {
             ApiGetBlogByType(params).then(res => {
-                this.isloading = false
                 if(res.code == 200 && res.data) {
                     this.count = res.data.count
                     let _blogList  = res.data.rows
-                    this.blogList = _blogList.concat(this.blogList)
-                    if(this.blogList.length == res.data.count) {
+                    this.blogList =this.blogList.concat(_blogList)
+                    if(this.blogList.length == res.data.count && res.data.count!==0) {
                         this.showBottomTip = true
                     }
                 }
-                $('#blog-list-wrap').addClass('animated fadeInUp slow');
+                if(this.form.pageNumber == 1){
+                    $('#blog-list-wrap').addClass('animated fadeInUp slow');
+                }
+                this.isloading = false
             })
         },
         searchGetAll() {
@@ -230,18 +231,22 @@ export default {
             this.getBlog(this.form)
             this.$router.push({path: '/blog'})
         },
-        searchByType(blogTypeId) {
-            this.isloading = true
-            $('#blog-list-wrap').removeClass('animated fadeInUp slow');
-            $('html,body').animate({scrollTop: '0px'}, 800)
-            this.form.blogTypeId = blogTypeId
+        searchByTypeBtn( blogTypeId ) {
             this.form.pageNumber = 1
             this.blogList = []
+            this.searchByType( blogTypeId )
+        },
+        searchByType( blogTypeId ) {
+            this.isloading = true
+            $('#blog-list-wrap').removeClass('animated fadeInUp slow');
+            if(this.form.pageNumber == 1){
+                $('html,body').animate({scrollTop: '0px'}, 800)
+            }
+            this.form.blogTypeId = blogTypeId
             this.$router.push({path: '/blog',query: {_btId: blogTypeId}})
             this.getBlogByType(this.form)
         }
     }
-
 }
 </script>
 

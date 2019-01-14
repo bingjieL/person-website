@@ -230,7 +230,7 @@ export default {
     scrollToTop: true,
     head() {
         return {
-            title: 'Blog Detail Page || ~~Jay的小栈',
+            title: `${this.pagetitle} || Blog Detail Page`,
             meta: [
                 { charset: 'utf-8' },
                 { name: 'viewport', content: 'width=device-width, initial-scale=1' },

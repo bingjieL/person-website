@@ -284,17 +284,17 @@ export default {
             })
         },
         getblog() {
-            ApiGetBlog({pageSize: 10, pageNumber:1}).then(res => {
+            ApiGetBlog({pageSize: 6, pageNumber: 1}).then(res => {
                 if(res.code == 200 && res.data.count>0) {
                     this.discoverList = res.data.rows
                 }
-            
             })
         },
         goBlogDetail(blogDetail) {
-            let _title = blogDetail.blogTitle.replace(/\n/g, '_')
+            let _title = blogDetail.blogTitle.replace(/[\n%]/g, '_')
             let blogId = blogDetail.blogId
-            this.$router.push({path: `/blogDetail/${_title}`, query: { bid: blogId}})
+            let url = this.$router.resolve({path: `/blogDetail/${_title}`, query: { bid: blogId}})
+            window.open(url.href, '_blank')
         }
     }
 }
