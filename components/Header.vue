@@ -46,26 +46,26 @@
                         </nuxt-link>
                     </li>
                 </ul>
-               
             </nav>
             <div class="search-header">
-                    <span class="animated search" @click="search"><i class="iconfont icon-search"></i></span>
-                    <template v-if="userData.commentUserEmail">
-                        <span @click="gotoUser(true)" ref='MineIcon' class="animated mine" @mouseover="setHoverClass('MineIcon', 'swing')" @mouseout="rmHoverClass('MineIcon', 'swing')">
-                            <el-dropdown @command="userGoDetail">
-                                <!-- <img src="~/assets/img/min-banner/header-logo.jpg" alt="logo" srcset=""> -->
-                                <img :src="userData.commentUserImg" alt="logo" srcset="">  
-                                <el-dropdown-menu slot="dropdown">
-                                    <el-dropdown-item command="password">修改密码</el-dropdown-item>
-                                    <el-dropdown-item command="basic">修改信息</el-dropdown-item>
-                                    <!-- <el-dropdown-item command="loginOut">退出登录</el-dropdown-item> -->
-                                </el-dropdown-menu>
-                            </el-dropdown>
-                        </span>
-                    </template>
-                    <template v-else>
-                        <span @click="gotoUser(false)" ref='MineIcon' class="animated mine" @mouseover="setHoverClass('MineIcon', 'swing')" @mouseout="rmHoverClass('MineIcon', 'swing')"><i class="iconfont icon-wode"></i></span>
-                    </template>
+                <span class="animated search" @click="search"><i class="iconfont icon-search"></i></span>
+                <template v-if="userData.commentUserEmail">
+                    <span @click="gotoUser(true)" ref='MineIcon' class="animated mine" @mouseover="setHoverClass('MineIcon', 'swing')" @mouseout="rmHoverClass('MineIcon', 'swing')">
+                        <el-dropdown @command="userGoDetail">
+                            <!-- <img src="~/assets/img/min-banner/header-logo.jpg" alt="logo" srcset=""> -->
+                            <img :src="userData.commentUserImg" alt="logo" srcset="">  
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item command="password">修改密码</el-dropdown-item>
+                                <el-dropdown-item command="basic">修改信息</el-dropdown-item>
+                                <!-- <el-dropdown-item command="loginOut">退出登录</el-dropdown-item> -->
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </span>
+                </template>
+                <template v-else>
+                    <span @click="gotoUser(false)" ref='MineIcon' class="animated mine" @mouseover="setHoverClass('MineIcon', 'swing')" @mouseout="rmHoverClass('MineIcon', 'swing')"><i class="iconfont icon-wode"></i></span>
+                </template>
+                <span class="animated zhankai" @click="mobileNavBtn"><i class="iconfont icon-zhankai1"></i></span>
             </div>
         </header>
         <div class="search-wrap" id="search-wrap" @keydown.enter="goSearch">
@@ -84,6 +84,46 @@
         <div class="goTop" ref='goTop' @click="gotop">
             <img  src="~/assets/img/logo/scroll.png" alt="scroll">
         </div>
+        <el-dialog class="mobileNav" :visible.sync="mobileNavVisible" width="100%">
+             <ul ref='nav' class="nav">
+                <li @mouseover="setHoverClass('homeIcon', 'flash')" @mouseout="rmHoverClass('homeIcon', 'flash')" @click="closeMobileNav">
+                    <nuxt-link to='/homePage'>
+                        <span ref='homeIcon' class="icon animated"><i class="iconfont icon-home"></i></span> 
+                        Home
+                    </nuxt-link>
+                </li>
+                <li @mouseover="setHoverClass('aboutIcon', 'shake')" @mouseout="rmHoverClass('aboutIcon', 'shake')" @click="closeMobileNav">
+                    <nuxt-link to='/blog'>
+                        <span ref='aboutIcon' class="icon animated"><i class="iconfont icon-about"></i></span> 
+                        Blog
+                    </nuxt-link>
+                </li>
+                <li @mouseover="setHoverClass('XinIcon', 'rotateIn')" @mouseout="rmHoverClass('XinIcon', 'rotateIn')" @click="closeMobileNav">
+                    <nuxt-link to='/music'>
+                        <span ref='XinIcon' class="icon animated"><i class="iconfont icon-yinle"></i></span> 
+                        Music
+                    </nuxt-link>
+                </li>
+                <li @mouseover="setHoverClass('lockIcon', 'flash')" @mouseout="rmHoverClass('lockIcon', 'flash')" @click="closeMobileNav">
+                    <nuxt-link to='/book'>
+                        <span ref='lockIcon' class="icon animated"><i class="iconfont icon-shu"></i></span> 
+                        书单
+                    </nuxt-link>
+                </li>
+                    <li @mouseover="setHoverClass('liuyanIcon', 'bounce')" @mouseout="rmHoverClass('liuyanIcon', 'bounce')" @click="closeMobileNav">
+                    <nuxt-link to='/comment'>
+                        <span ref='liuyanIcon' class="icon animated"><i class="iconfont icon-liuyan"></i></span> 
+                        留言
+                    </nuxt-link>
+                </li>
+                <li @mouseover="setHoverClass('projectIcon', 'flip')" @mouseout="rmHoverClass('projectIcon', 'flip')" @click="closeMobileNav">
+                    <nuxt-link to='/about'>
+                        <span ref='projectIcon' class="icon animated"><i class="iconfont icon-project-o"></i></span> 
+                        About
+                    </nuxt-link>
+                </li>
+            </ul>
+        </el-dialog>
     </div>
 </template>
 
@@ -94,6 +134,7 @@ export default {
     data() {
         return {
             searchStr: '',
+            mobileNavVisible: false
         }
     },
     computed: {
@@ -117,6 +158,12 @@ export default {
     },
     methods: {
         ...mapMutations(['SET_USER_BASIC', 'CLEAR_USER_BASIC']),
+        mobileNavBtn() {
+            this.mobileNavVisible = true
+        },
+        closeMobileNav() {
+            this.mobileNavVisible = false
+        },
         gotoUser(isLogin) {
             if(this.$route.path == '/userDetail' || this.$route.path == '/login' ||  this.$route.path =='/register' ||  this.$route.path =='/changePassword') return
             if(isLogin) {
@@ -150,14 +197,19 @@ export default {
         },
         changeGoToplocation(){
             let scrollTop = document.documentElement.scrollTop||document.body.scrollTop
+            let windowWidth =  $(window).width()
             if(scrollTop > 200){
                 this.$refs.goTop.style.bottom = '15vh'
                 this.$refs.header.classList.add('headerHover')
-                $('#nav-right').fadeIn();
+                if(windowWidth>600){
+                     $('#nav-right').fadeIn();
+                }
             }else{
                 this.$refs.goTop.style.bottom = '100vh'
                 this.$refs.header.classList.remove('headerHover')
-                $('#nav-right').hide()
+                if(windowWidth>600){
+                    $('#nav-right').hide()
+                }
             }
         },
         headerHover() {

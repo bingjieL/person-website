@@ -24,6 +24,9 @@
             }  
         }
         .header-title{
+            @media screen and (max-width: 600px) {
+                font-size: 36px;
+            }
             position: absolute;
             font-family: Ubuntu Bold,sans-serif;
             color: #fff;
@@ -101,6 +104,10 @@
             }
         }
         .header-tip{
+            @media screen and (max-width: 600px) {
+                display: none;
+            }
+            display: block;
             position: absolute;
             top: calc( 36vh + 120px ) ;
             width: 540px;
@@ -221,6 +228,9 @@
     .homePage-content{
         padding: 50px 0;
         width: 900px;
+        @media screen and (max-width: 600px) {
+            width: 90%;
+        }
         margin: 0 auto;
         .content-notice{
             border: 1px dashed #e6e6e6;
