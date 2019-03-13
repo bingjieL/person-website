@@ -1,6 +1,6 @@
 <template>
   <!-- You can find this swiper instance object in current component by the "mySwiper"  -->
-  <div v-swiper:mySwiper="swiperOption" id='certify' v-if="showSwiper">
+  <div v-swiper:mySwiper="isMobile?swiperOptionMobile:swiperOption" id='certify' v-if="showSwiper">
     <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(item,index) in swiperList" :key="index" >
             <img :src="item.hotImg" style="width:100%" :id="item.hotId"/>
@@ -24,6 +24,7 @@ import { ApiGetSwiper } from '~/plugins/server/swiper'
     data () {
       let vm = this
       return {
+        isMobile: false,
         showSwiper: false,
         swiperList: [
         //   {
@@ -53,6 +54,7 @@ import { ApiGetSwiper } from '~/plugins/server/swiper'
             loopedSlides: 3,      
             slidesPerView: 2, 
             cwidth: 1100,
+            autoplay: true,
             observer:true,
             // autoplay: true,
             // navigation: {
@@ -101,8 +103,64 @@ import { ApiGetSwiper } from '~/plugins/server/swiper'
                     }
                 }
             }
+        },
+        swiperOptionMobile: {
+            autoplay: true,
+            watchSlidesProgress: true,
+            slidesPerView: 'auto',
+            centeredSlides: true,
+            loop: true,
+            loopedSlides: 5,      
+            slidesPerView: 1, 
+            observer:true,
+            navigation: {
+            //   nextEl: '.swiper-button-next',
+            //   prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            on: {
+                click: function(){
+                    
+                },
+                progress: function(progress) {
+                    for (let i = 0; i < this.slides.length; i++) {
+                        let slide = this.slides.eq(i);
+                        let slideProgress = this.slides[i].progress;
+                        let modify = 1;
+                        if (Math.abs(slideProgress) > 1) {
+                            modify = (Math.abs(slideProgress) - 1) * 0.3 + 1;
+                        }
+                        let translate = slideProgress * modify * 150 + 'px';
+                        let scale = 1 - Math.abs(slideProgress) / 7;
+                        let zIndex = 999 - Math.abs(Math.round(10 * slideProgress));
+                        slide.transform('translateX(' + translate + ') scale(' + scale + ')');
+                        slide.css('zIndex', zIndex);
+                        slide.css('opacity', 1);
+                        if (Math.abs(slideProgress) > 3) {
+                            slide.css('opacity', 0);
+                        }
+                    }
+                },
+                setTransition: function(transition) {
+                    for (let i = 0; i < this.slides.length; i++) {
+                        let slide = this.slides.eq(i)
+                        slide.transition(transition);
+                    }
+                }
+            }
         }
       }
+    },
+    beforeMount() {
+        let  h = document.documentElement.clientWidth || document.body.clientWidth;
+        if (h <= 600) {
+        this.isMobile = true;
+        } else {
+        this.isMobile = false;
+        }
     },
     mounted() {
         this.getSwiperList()
@@ -130,6 +188,9 @@ import { ApiGetSwiper } from '~/plugins/server/swiper'
 	width: 900px;
     margin: 0px auto;
     padding: 5px 0 30px;
+    @media screen and (max-width: 600px) {
+        width: 90%;
+    }
 }
 
 #certify .swiper-container {

@@ -1,6 +1,7 @@
 .blog-wrap{
     width: 100%;
     margin-bottom: 100px; 
+    overflow: hidden;
     .banner{
         width: 100%;
         height: 65vh;
@@ -43,6 +44,9 @@
     .detail-main{
         width: 800px;
         margin: 0 auto 50px;
+        @media screen and (max-width: 600px) {
+            width: 100%;
+        }
         .blog-des{
             color: #666;
             font-weight: 500;

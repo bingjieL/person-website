@@ -39,6 +39,10 @@
         .left{
             padding-left: 60px; 
             // width: 320px;
+            @media screen and (max-width: 600px) {
+                padding-left: 10px;
+                line-height: 60px; 
+            }
             overflow: hidden;
             h3{
                 text-transform: uppercase;
@@ -318,6 +322,8 @@
                 >a{
                     font-size: 18px;
                     line-height: 45px;
+                    display: block;
+                    width: 100%;
                     span{
                         padding: 0px 15px;
                     }

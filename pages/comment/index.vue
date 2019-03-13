@@ -8,7 +8,7 @@
        <main class="main-wrap">
            <div class="content-basic">
                     <el-form v-show="!userData.commentUserEmail" :inline="true" ref="comment" :model="form.userData" :rules="rules" class="demo-form-inline">
-                        <el-form-item>
+                        <el-form-item  class="mobileMyico">
                             <i class="iconfont icon-wode avatar-uploader-icon"></i>
                         </el-form-item>
                         <el-form-item label="昵称" prop="commentUserName">

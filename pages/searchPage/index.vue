@@ -86,6 +86,7 @@ export default {
             this.getSearchBlogList()
         },
         getSearchBlogList() {
+            this.$router.push({path: '/searchPage?', query:{_s: this.searchStr}})
             ApiSearchBlog({searchStr: this.searchStr}).then(res => {
                 if(res.code == 200) {
                     this.searchList = res.data

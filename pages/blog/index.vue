@@ -141,9 +141,13 @@ export default {
         }else{
             this.getBlog(this.form)
         }
-        this.changeAsideShow()
-        window.addEventListener('scroll', this.changeAsideShow)
-        window.addEventListener('resize', this.changeAsideShow)
+        let width = document.documentElement.clientWidth
+        console.log('----> width', width)
+        if(width > 600) {
+            this.changeAsideShow()
+            window.addEventListener('scroll', this.changeAsideShow)
+            window.addEventListener('resize', this.changeAsideShow)
+        }
 
     },
     destroyed() {

@@ -66,6 +66,9 @@
                     <div class="noticeContent animated slideInUp infinite slower">
                         Jay.Blog 正式上线咯！ ~~~~ (*^▽^*) ~~~~  ！！！
                     </div>
+                    <div class="noticeContentMobile noticeContent animated slideInUp infinite slower">
+                        Jay.Blog 正式上线咯!
+                    </div>
                 </div>
                 <div class="content-hot">
                     <div class="hot-header">
