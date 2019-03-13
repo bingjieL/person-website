@@ -191,6 +191,9 @@
         }
         animation: toTopUP 2s linear infinite;
         transition: all .4s ease;
+        @media screen and (max-width: 600px) {
+            display: none;
+        }
         @keyframes toTopUP {
             0%{
                 transform: translateY(0)

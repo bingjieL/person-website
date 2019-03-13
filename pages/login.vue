@@ -60,7 +60,12 @@ export default {
         }
     },
     mounted() {
-        $('#registerForm').css({left: '50px'})
+        let width = document.documentElement.clientWidth
+        if(width > 600) {
+            $('#registerForm').css({left: '50px'})
+        }else {
+            $('#registerForm').css({left: '-10px'})
+        }
     },
     methods: {
         ...mapMutations(['SET_USER_BASIC']),

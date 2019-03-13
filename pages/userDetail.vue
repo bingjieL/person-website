@@ -80,7 +80,12 @@ export default {
         }
     },
     mounted() {
-        $('#registerForm').css({left: '50px'})
+        let width = document.documentElement.clientWidth
+        if(width > 600) {
+            $('#registerForm').css({left: '50px'})
+        }else {
+            $('#registerForm').css({left: '-10px'})
+        }
         let userData = localStorage.getItem('userData')
         if(!userData) return this.$router.push('/homePage')
         let _userData = userData?JSON.parse(unescape(userData)): {}
