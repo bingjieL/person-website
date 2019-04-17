@@ -16,11 +16,13 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Meta description' },
-      { property: 'og:title', content: 'website'},
-      { property: 'og:type', content: 'website'},
+      { hid: 'description', name: 'description', content: 'Jay的小栈' },
+      { hid: 'Keywords', name: 'Keywords', content: 'Jay的小栈' },
+
+      { property: 'og:title', content: 'Jay的小栈'},
+      { property: 'og:type', content: 'Jay的小栈'},
       { property: 'og:image', content: 'www.baidu.com/img/bd_logo1.png'},
-      { property: 'og:description', content: 'website'}
+      { property: 'og:description', content: 'Jay的小栈'}
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }

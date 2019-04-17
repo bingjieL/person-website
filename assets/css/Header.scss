@@ -46,7 +46,7 @@
             overflow: hidden;
             h3{
                 text-transform: uppercase;
-                font-weight: 900;
+                font-weight: 600;
                 overflow: hidden;
                 color: #b2b0a9;
                 font-size: 30px;
@@ -54,7 +54,7 @@
                 text-align: center;
                 position: relative;
                 outline: none;
-                font-family: FZShuTi;
+                font-family: cursive;
                 &:hover{
                     border-radius:4px;
                     color: orange; 
@@ -65,13 +65,14 @@
                     }
                 }
                 span{
-                    font-family: FZShuTi;
+                    font-family: cursive;
                     display: inline-block;
                     height: 32px;
                     margin: 10px 0;
                     line-height: 30px;
                     padding: 0 5px;
                     font-size: 24px;
+                    font-weight: 500;
                 }
             }
         }
