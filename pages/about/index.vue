@@ -18,14 +18,12 @@
 export default {
     layout: 'hasHeader',
     head: {
-        title: 'About Page || ~~Jay的小栈',
+        title: 'About Page 关于我 || ~~Jay的小栈',
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-            { hid: 'description', name: 'description', content: 'Jay的小栈的About Page' },
-            { property: 'og:title', content: 'About Page'},
-            { property: 'og:type', content: 'About Page'},
-            { property: 'og:description', content: 'About Page'}
+            { name: 'description', content: 'Jay的小栈关于我的一些介绍, 如果你想了解我快快过来哦。' },
+            { name: 'Keywords', content: 'Jay的小栈 About Page 关于我' },
         ]
     },
 }

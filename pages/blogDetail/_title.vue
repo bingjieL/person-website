@@ -213,10 +213,16 @@ import{ mapState, mapMutations} from 'vuex'
 import DefaultHead from '~/assets/img/comment/default-head.png'
 
 export default {
-    asyncData(context) {
+    async asyncData (context) {
+        let blogDetail =  await ApiGetBlogDetail({blogId: context.query.bid})
+        let blogDes = null
+        if(blogDetail.code == 200) {
+            blogDes = blogDetail.data.blogDes
+        }
         return {
             bid: context.query.bid,
-            pagetitle: context.params.title
+            pagetitle: context.params.title,
+            blogDes
         }
     },
     validate({ params, query }) {
@@ -234,10 +240,8 @@ export default {
             meta: [
                 { charset: 'utf-8' },
                 { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-                { hid: 'description', name: 'description', content: 'Jay的小栈的Blog Detail Page' },
-                { property: 'og:title', content: `${this.pagetitle} Jay的小栈`},
-                { property: 'og:type', content: `${this.pagetitle} Jay的小栈`},
-                { property: 'og:description', content: `${this.pagetitle} Jay的小栈`}
+                { name: 'description', content: `${this.blogDes}` },
+                { name: 'Keywords', content: `Jay的小栈 blog 详情页面, ${this.pagetitle}` },
             ]
         }
     },

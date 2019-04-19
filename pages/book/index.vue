@@ -41,14 +41,12 @@ export default {
     layout: 'hasHeader',
     scrollToTop: true,
     head: {
-        title: 'Book Page || ~~Jay的小栈',
+        title: 'Book Page 书籍列表 || ~~Jay的小栈',
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-            { hid: 'description', name: 'description', content: 'Jay的小栈的Book Page' },
-            { property: 'og:title', content: 'Book Page'},
-            { property: 'og:type', content: 'Book Page'},
-            { property: 'og:description', content: 'Book Page'}
+            { name: 'description', content: 'Jay的小栈的书籍列表,推荐个人喜欢的书籍,希望对于你有一定的帮助' },
+            { name: 'Keywords', content: 'Jay的小栈的Book Page, 博客书籍列表'}
         ]
     },
     data() {

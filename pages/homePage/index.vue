@@ -176,14 +176,12 @@ export default {
     layout: 'hasHeader',
     scrollToTop: true,
     head: {
-        title: '~~Jay的小栈 || Home Page',
+        title: '~~Jay的小栈 首页 || Home Page',
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-            { hid: 'description', name: 'description', content: 'Jay的小栈的首页' },
-            { property: 'og:title', content: 'Home Page'},
-            { property: 'og:type', content: 'Home Page'},
-            { property: 'og:description', content: 'Home Page'}
+            { name: 'description', content: 'Jay的小栈中收纳了本人日常开发遇到的问题,和个人喜欢的音乐、书籍。以及关于本人的个人介绍' },
+            { name: 'Keywords', content: 'Jay的小栈的首页' },
         ]
     },
     components: {

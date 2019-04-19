@@ -107,14 +107,12 @@ export default {
     layout: 'hasHeader',
     scrollToTop: true,
     head: {
-        title: 'Blog Page || ~~Jay的小栈',
+        title: 'Blog Page 博客列表 || ~~Jay的小栈',
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-            { hid: 'description', name: 'description', content: 'Jay的小栈的Blog Page' },
-            { property: 'og:title', content: 'Blog Page'},
-            { property: 'og:type', content: 'Blog Page'},
-            { property: 'og:description', content: 'Blog Page'}
+            { name: 'description', content: 'Jay的小栈的Blog的列表,包括博客的分类,让小主快速的查看到想要blog。' },
+            { name: 'Keywords', content: 'Jay的小栈的Blog Page, 博客列表' }
         ]
     },
     data() {

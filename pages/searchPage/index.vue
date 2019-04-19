@@ -61,10 +61,8 @@ export default {
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-            { hid: 'description', name: 'description', content: 'Jay的小栈的Search Page' },
-            { property: 'og:title', content: 'Search Page'},
-            { property: 'og:type', content: 'Search Page'},
-            { property: 'og:description', content: 'Search Page'}
+            { name: 'description', content: '欢迎来搜索你想要的blog，如果未找到你想要的知识。这里还会推荐热度高的blog哦' },
+            { name: 'Keywords', content: 'Jay的小栈的Search Page, 博客搜索页面'}
         ]
     },
     data() {

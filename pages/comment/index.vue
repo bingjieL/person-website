@@ -184,14 +184,12 @@ export default {
     layout: 'hasHeader',
     scrollToTop: true,
     head: {
-        title: 'Comment Page || ~~Jay的小栈',
+        title: 'Comment Page 留言板 || ~~Jay的小栈',
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-            { hid: 'description', name: 'description', content: 'Jay的小栈的Comment Page' },
-            { property: 'og:title', content: 'Comment Page'},
-            { property: 'og:type', content: 'Comment Page'},
-            { property: 'og:description', content: 'Comment Page'}
+            { name: 'description', content: 'Jay的小栈留言板页面,欢迎大佬常来交流。在这里留下你的足迹哦。有不足之处欢迎指出' },
+            { name: 'Keywords', content: 'Jay的小栈 comment Page 留言板' },
         ]
     },
     data() {

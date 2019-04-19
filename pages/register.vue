@@ -47,14 +47,12 @@ import{ mapState, mapMutations} from 'vuex'
 export default {
     layout: 'noFooter',
     head: {
-        title: '~~Jay的小栈 || Register Page',
+        title: '~~Jay的小栈 注册页面 || Register Page',
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-            { hid: 'description', name: 'description', content: 'Jay的小栈注册页面' },
-            { property: 'og:title', content: 'Register Page'},
-            { property: 'og:type', content: 'Register Page'},
-            { property: 'og:description', content: 'Register Page'}
+            { name: 'description', content: '注册页面' },
+            { name: 'Keywords', content: 'Jay的小栈的注册页面'}
         ]
     },
     data() {
