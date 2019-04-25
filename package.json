@@ -1,7 +1,7 @@
 {
-  "name": "blog",
+  "name": "Jayblog",
   "version": "1.0.0",
-  "description": "Nuxt.js project",
+  "description": "Jay的小栈",
   "author": "bjLiu <15890940381@163.com>",
   "private": true,
   "config": {

@@ -19,11 +19,11 @@
                 <ul class="header-recom">
                     <li class="lt" data-value='~~ 召唤魔法 ~~' @click="bannerChangeBack"><i class="iconfont icon-xiangzuoxiangyou-copy-copy"></i></li>
                     <li class="github" data-value='github'>
-                        <a href="javascript:;" target="_blank">
+                        <a href="https://github.com/bingjieL" target="_blank">
                             <i class="iconfont icon-github"></i>
                         </a>
                     </li>
-                    <li class="zhihu" data-value='知乎'>
+                    <li class="zhihu" data-value='暂时没维护哦'>
                         <a href="javascript:;" target="_blank">
                             <i class="iconfont icon-zhihu1"></i>
                         </a>
@@ -34,7 +34,7 @@
                         </a>
                     </li>
                     <li class="weixin" data-value='WeChat'>
-                        <a href="" target="_blank">
+                        <a href="javascript:;" target="_blank">
                             <i class="iconfont icon-weixin"></i>
                         </a>
                     </li>
@@ -43,12 +43,12 @@
                             <i class="iconfont icon-twiter"></i>
                         </a>
                     </li>
-                    <li class="cloudMusic" data-value='CloudMusic'>
+                    <li class="cloudMusic" data-value='民谣大叔Jay'>
                         <a href="javascript:;" target="_blank">
                             <i class="iconfont icon-wangyiyunyinleclick"></i>
                         </a>
                     </li>
-                    <li class="email" data-value='Email'>
+                    <li class="email" data-value='13162238612@163.com'>
                         <a href="javascript:;" target="_blank">
                             <i class="iconfont icon-email"></i>
                         </a>
@@ -176,7 +176,7 @@ export default {
     layout: 'hasHeader',
     scrollToTop: true,
     head: {
-        title: '~~Jay的小栈 首页 || Home Page',
+        title: 'Jay的小栈',
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },

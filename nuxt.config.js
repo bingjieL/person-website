@@ -12,7 +12,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: '~~Jay的小栈 || Home Page',
+    title: 'Jay的小栈',
     meta: [
       // { charset: 'utf-8' },
       // { name: 'viewport', content: 'width=device-width, initial-scale=1' },
